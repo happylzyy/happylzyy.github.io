@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>HulGodhel&#39;s Blog</title>
+  
+  
+  <link href="http://happylzyy.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://happylzyy.github.io/"/>
+  <updated>2021-08-06T07:40:59.790Z</updated>
+  <id>http://happylzyy.github.io/</id>
+  
+  <author>
+    <name>HulGodhel</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Pure主题使用Katex渲染Latex公式</title>
+    <link href="http://happylzyy.github.io/2021/08/06/how-to-render-latex-equation-code-with-katex/"/>
+    <id>http://happylzyy.github.io/2021/08/06/how-to-render-latex-equation-code-with-katex/</id>
+    <published>2021-08-06T06:47:55.000Z</published>
+    <updated>2021-08-06T07:40:59.790Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="安装依赖插件"><a class="markdownIt-Anchor" href="#安装依赖插件"></a> 安装依赖插件</h4><p>先卸载原先的渲染插件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br></pre></td></tr></table></figure><p>再安装新的渲染插件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-markdown-it-plus --save</span><br></pre></td></tr></table></figure><h4 id="文章启用mathjax"><a class="markdownIt-Anchor" href="#文章启用mathjax"></a> 文章启用Mathjax</h4><p>需要写公式的文章开头加入</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mathjax:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure><h4 id="使用新版本katex"><a class="markdownIt-Anchor" href="#使用新版本katex"></a> 使用新版本Katex</h4><p>主题中使用的旧版本Katex有分数横线不显示的bug，升级最新版本可以完美解决</p><p>打开<code>head.ejs</code>文件，该文件位于<code>themes/pure/layout/_common/</code>，找到</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure><p>修改为</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;安装依赖插件&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#安装依赖插件&quot;&gt;&lt;/a&gt; 安装依赖插件&lt;/h4&gt;
+&lt;p&gt;先卸载原先的渲染插件&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+      
+    
+    
+    
+    
+    <category term="katex" scheme="http://happylzyy.github.io/tags/katex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Hexo建立个人Blog站</title>
+    <link href="http://happylzyy.github.io/2021/08/06/how-to-build-blog-with-hexo/"/>
+    <id>http://happylzyy.github.io/2021/08/06/how-to-build-blog-with-hexo/</id>
+    <published>2021-08-05T17:41:30.000Z</published>
+    <updated>2021-08-06T06:37:14.054Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文章记录了本博客的建立过程，以下所有操作是在Manjaro Linux上进行的，其他未尽事宜请见<a href="https://hexo.io/zh-cn/docs/">官方文档</a>。</p><h4 id="hexo简介"><a class="markdownIt-Anchor" href="#hexo简介"></a> Hexo简介</h4><p>Hexo是一个快速、简洁且高效的博客框架；</p><p>可以使用 Markdown 来排版和写文章；</p><p>生成的网页是静态页面的，特别适合用来白嫖 GitHub Pages😈。</p><h4 id="安装环境"><a class="markdownIt-Anchor" href="#安装环境"></a> 安装环境</h4><p>Hexo运行所需的软件和安装命令如下：</p><ul><li><p>Node.js</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -Sy nodejs npm</span><br></pre></td></tr></table></figure><p>由于某些不可描述的原因，npm需要换成国内的淘宝源：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure></li><li><p>Git</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -Sy git</span><br></pre></td></tr></table></figure></li></ul><h4 id="hexo站点初始化"><a class="markdownIt-Anchor" href="#hexo站点初始化"></a> Hexo站点初始化</h4><p>建立一个空文件夹并进入这个文件夹，这将成为博客站的主目录</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir hexo_blog &amp;&amp; cd hexo_blog</span><br></pre></td></tr></table></figure><p>在该目录内安装Hexo</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo</span><br></pre></td></tr></table></figure><p>进行hexo初始化</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo init</span><br></pre></td></tr></table></figure><p>此时，一个Hexo驱动的博客站就建好了。要查看刚刚建好的博客，可以执行<code>npx hexo clean &amp;&amp; npx hexo g &amp;&amp; npx hexo s</code>，按住<kbd>Ctrl</kbd>建点击生成的网址即可打开。</p><h4 id="hexo管理"><a class="markdownIt-Anchor" href="#hexo管理"></a> Hexo管理</h4><p>这里列举几个常用的Hexo命令</p><ul><li><p>清理生成的文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo clean</span><br></pre></td></tr></table></figure></li><li><p>生成文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo generate</span><br></pre></td></tr></table></figure></li><li><p>进行预览</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo server</span><br></pre></td></tr></table></figure></li><li><p>新建文章</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo new <span class="string">&quot;NewPostName&quot;</span></span><br></pre></td></tr></table></figure></li></ul><h4 id="hexo主题修改"><a class="markdownIt-Anchor" href="#hexo主题修改"></a> Hexo主题修改</h4><p>Hexo有很多主题可供选择，在官网的<a href="https://hexo.io/themes/index.html">主题站</a>挑选，这里选择<a href="https://github.com/cofess/hexo-theme-pure">pure主题</a>。</p><p>在博客站主目录下克隆主题</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/cofess/hexo-theme-pure.git themes/pure</span><br></pre></td></tr></table></figure><p>安装pure主题的依赖包</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-wordcount --save</span><br><span class="line">npm install hexo-generator-json-content --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure><p>复制一份主题配置样例到博客主目录</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp themes/pure/_config.yml _config.pure.yml</span><br></pre></td></tr></table></figure><p>修改博客配置<code>_config.yml</code>，将<code>themes: landscape</code>修改为<code>themes: pure</code>。</p><p>根据<a href="https://github.com/cofess/hexo-theme-pure/blob/master/README.cn.md#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE">说明文档</a>对主题配置进行相关修改。</p><h4 id="hexo部署"><a class="markdownIt-Anchor" href="#hexo部署"></a> Hexo部署</h4><p>登录自己的GitHub，新建一个Repository，名字为<code>[GitHub用户名].github.io</code>。</p><p>在Repository的Setting中勾选GitHub Pages功能。</p><p>打开博客配置文件<code>_config.yml</code>修改博客网站的描述部分</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">HulGodhel&#x27;s</span> <span class="string">Blog</span>  <span class="comment"># 博客标题</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;&#x27;</span>  <span class="comment"># 次标题</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;&#x27;</span>  <span class="comment">#网站描述</span></span><br><span class="line"><span class="attr">keywords:</span>  <span class="comment"># 关键词</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">HulGodhel</span>  <span class="comment"># 作者</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">en</span>  <span class="comment"># 博客网站语言，英语en，中文zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;&#x27;</span>  <span class="comment"># 时区</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><p>修改站点网址部分</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">http://[Github用户名].github.io</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><p>修改部署部分</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span> <span class="comment"># 部署方式为git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:happylzyy/happylzyy.github.io.git</span> <span class="comment"># Repository远程仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span> <span class="comment"># 部署到远程分支master</span></span><br></pre></td></tr></table></figure><p>配置完成后，运行<code>npx hexo clean &amp;&amp; npx hexo g</code>重新生成博客，再运行<code>npx hexo deploy</code>即可部署到GitHub上。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本文章记录了本博客的建立过程，以下所有操作是在Manjaro Linux上进行的，其他未尽事宜请见&lt;a href=&quot;https://hexo.io/zh-cn/docs/&quot;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+&lt;h4 id=&quot;hexo简介&quot;&gt;&lt;a class=&quot;markdownIt</summary>
+      
+    
+    
+    
+    
+    <category term="hexo" scheme="http://happylzyy.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+</feed>
