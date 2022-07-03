@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://happylzyy.github.io/2022/07/03/how-to-unlock-cfg-lock/</loc>
+    <loc>http://happylzyy.github.io/tags/index.html</loc>
     
     <lastmod>2022-07-03</lastmod>
     
@@ -11,16 +11,7 @@
   </url>
   
   <url>
-    <loc>http://happylzyy.github.io/404.html</loc>
-    
-    <lastmod>2022-07-03</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/</loc>
+    <loc>http://happylzyy.github.io/categories/index.html</loc>
     
     <lastmod>2022-07-03</lastmod>
     
@@ -38,6 +29,24 @@
   </url>
   
   <url>
+    <loc>http://happylzyy.github.io/2022/07/03/how-to-unlock-cfg-lock/</loc>
+    
+    <lastmod>2022-07-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/</loc>
+    
+    <lastmod>2022-07-03</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://happylzyy.github.io/2021/08/06/how-to-build-blog-with-hexo/</loc>
     
     <lastmod>2021-08-06</lastmod>
@@ -47,43 +56,7 @@
   </url>
   
   <url>
-    <loc>http://happylzyy.github.io/books/index.html</loc>
-    
-    <lastmod>2021-08-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://happylzyy.github.io/categories/index.html</loc>
-    
-    <lastmod>2021-08-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://happylzyy.github.io/links/index.html</loc>
-    
-    <lastmod>2021-08-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://happylzyy.github.io/repository/index.html</loc>
-    
-    <lastmod>2021-08-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://happylzyy.github.io/tags/index.html</loc>
     
     <lastmod>2021-08-05</lastmod>
     
