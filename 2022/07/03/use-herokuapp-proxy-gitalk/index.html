@@ -17,21 +17,23 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>使用Hexo建立个人Blog站 | HulGodhel&#39;s Blog</title>
-  <meta name="description" content="本文章记录了本博客的建立过程，以下所有操作是在Manjaro Linux上进行的，其他未尽事宜请见官方文档。 Hexo简介 Hexo是一个快速、简洁且高效的博客框架； 可以使用 Markdown 来排版和写文章； 生成的网页是静态页面的，特别适合用来白嫖 GitHub Pages😈。 安装环境 Hexo运行所需的软件和安装命令如下：  Node.js 1yay -Sy nodejs npm 由于">
+  <title>heroku反向代理gitalk解决403问题 | HulGodhel&#39;s Blog</title>
+  <meta name="description" content="Gitalk 403 问题 Gitalk评论系统在登录github时显示error: request failed with status code 403。这是因为 gitalk 在访问 github 时为了解决跨域问题而使用了一个反向代理，这个默认的反向代理近期限制了访问，所以无法使用了。 在网上找了好几个反向代理地址，但是都不好用，因此决定自己建一个反向代理服务器。教程分为两个部分，第一部分">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Hexo建立个人Blog站">
-<meta property="og:url" content="http://happylzyy.github.io/2021/08/06/how-to-build-blog-with-hexo/index.html">
+<meta property="og:title" content="heroku反向代理gitalk解决403问题">
+<meta property="og:url" content="http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/index.html">
 <meta property="og:site_name" content="HulGodhel&#39;s Blog">
-<meta property="og:description" content="本文章记录了本博客的建立过程，以下所有操作是在Manjaro Linux上进行的，其他未尽事宜请见官方文档。 Hexo简介 Hexo是一个快速、简洁且高效的博客框架； 可以使用 Markdown 来排版和写文章； 生成的网页是静态页面的，特别适合用来白嫖 GitHub Pages😈。 安装环境 Hexo运行所需的软件和安装命令如下：  Node.js 1yay -Sy nodejs npm 由于">
+<meta property="og:description" content="Gitalk 403 问题 Gitalk评论系统在登录github时显示error: request failed with status code 403。这是因为 gitalk 在访问 github 时为了解决跨域问题而使用了一个反向代理，这个默认的反向代理近期限制了访问，所以无法使用了。 在网上找了好几个反向代理地址，但是都不好用，因此决定自己建一个反向代理服务器。教程分为两个部分，第一部分">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-08-05T17:41:30.000Z">
-<meta property="article:modified_time" content="2021-08-06T06:37:14.054Z">
+<meta property="article:published_time" content="2022-07-03T13:01:09.000Z">
+<meta property="article:modified_time" content="2022-07-03T14:26:19.193Z">
 <meta property="article:author" content="HulGodhel">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="heroku">
+<meta property="article:tag" content="gitalk">
+<meta property="article:tag" content="proxy">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://happylzyy.github.io/2021/08/06/how-to-build-blog-with-hexo/index.html">
+  <link rel="canonical" href="http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/index.html">
   
     <link rel="alternate" href="/atom.xml" title="HulGodhel&#39;s Blog" type="application/atom+xml">
   
@@ -304,14 +306,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-how-to-build-blog-with-hexo" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-use-herokuapp-proxy-gitalk" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      使用Hexo建立个人Blog站
+      heroku反向代理gitalk解决403问题
     </h1>
   
 
@@ -319,86 +321,91 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2021/08/06/how-to-build-blog-with-hexo/" class="article-date">
-	  <time datetime="2021-08-05T17:41:30.000Z" itemprop="datePublished">2021-08-06</time>
+	<a href="/2022/07/03/use-herokuapp-proxy-gitalk/" class="article-date">
+	  <time datetime="2022-07-03T13:01:09.000Z" itemprop="datePublished">2022-07-03</time>
 	</a>
 </span>
         
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/hexo/" rel="tag">hexo</a>
+	<a class="article-tag-link-link" href="/tags/gitalk/" rel="tag">gitalk</a>, <a class="article-tag-link-link" href="/tags/heroku/" rel="tag">heroku</a>, <a class="article-tag-link-link" href="/tags/proxy/" rel="tag">proxy</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/08/06/how-to-build-blog-with-hexo/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/07/03/use-herokuapp-proxy-gitalk/#comments" class="article-comment-link">Comments</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>本文章记录了本博客的建立过程，以下所有操作是在Manjaro
-Linux上进行的，其他未尽事宜请见<a
-target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">官方文档</a>。</p>
-<h4 id="hexo简介">Hexo简介</h4>
-<p>Hexo是一个快速、简洁且高效的博客框架；</p>
-<p>可以使用 Markdown 来排版和写文章；</p>
-<p>生成的网页是静态页面的，特别适合用来白嫖 GitHub Pages😈。</p>
-<h4 id="安装环境">安装环境</h4>
-<p>Hexo运行所需的软件和安装命令如下：</p>
+        <h4 id="gitalk-403-问题">Gitalk 403 问题</h4>
+<p>Gitalk评论系统在登录github时显示<code>error: request failed with status code 403</code>。这是因为
+gitalk 在访问 github
+时为了解决跨域问题而使用了一个反向代理，这个默认的反向代理近期限制了访问，所以无法使用了。</p>
+<p>在网上找了好几个反向代理地址，但是都不好用，因此决定自己建一个反向代理服务器。教程分为两个部分，第一部分是服务器端的配置，第二部分是hexo网站的配置。</p>
+<h4 id="服务器端">服务器端</h4>
+<p>这里用到了开源项目<a
+target="_blank" rel="noopener" href="https://github.com/Rob--W/cors-anywhere">CORS
+Anywhere</a>，这个项目可以直接在heroku上运行。</p>
+<h5 id="注册heroku帐号">注册heroku帐号</h5>
+<p>首先需要到<a
+target="_blank" rel="noopener" href="https://www.heroku.com/">heroku官网</a>注册帐号，注册和验证的过程可能需要用到不可描述的工具。</p>
+<h5 id="下载安装hero-cli">下载安装Hero CLI</h5>
+<p>Hero CLI需要用到git，如果没有装git，请看这里</p>
 <ul>
-<li><p>Node.js</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -Sy nodejs npm</span><br></pre></td></tr></table></figure>
-<p>由于某些不可描述的原因，npm需要换成国内的淘宝源：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure></li>
-<li><p>Git</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -Sy git</span><br></pre></td></tr></table></figure></li>
+<li><a
+target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git
+installation</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup">First-time
+Git setup</a></li>
 </ul>
-<h4 id="hexo站点初始化">Hexo站点初始化</h4>
-<p>建立一个空文件夹并进入这个文件夹，这将成为博客站的主目录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir hexo_blog &amp;&amp; cd hexo_blog</span><br></pre></td></tr></table></figure>
-<p>在该目录内安装Hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo</span><br></pre></td></tr></table></figure>
-<p>进行hexo初始化</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo init</span><br></pre></td></tr></table></figure>
-<p>此时，一个Hexo驱动的博客站就建好了。要查看刚刚建好的博客，可以执行<code>npx hexo clean &amp;&amp; npx hexo g &amp;&amp; npx hexo s</code>，按住<kbd>Ctrl</kbd>建点击生成的网址即可打开。</p>
-<h4 id="hexo管理">Hexo管理</h4>
-<p>这里列举几个常用的Hexo命令</p>
+<p>在Linux上安装<code>heroku-cli</code>比较简单，只需要运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://cli-assets.heroku.com/install.sh | sh</span><br></pre></td></tr></table></figure>
+<p>对于arch系Linux，还可以用AUR安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S hero-cli</span><br></pre></td></tr></table></figure>
+<h5 id="下载安装cors-anywhere">下载安装CORS Anywhere</h5>
+<p>运行git clone</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Rob--W/cors-anywhere.git</span><br></pre></td></tr></table></figure>
+<p>进入cors-anywhere目录，安装依赖包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> cors-anywhere</span><br><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<h5 id="部署cors-anywhere">部署CORS Anywhere</h5>
+<p>登录heroku-cli</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">heroku login -i</span><br></pre></td></tr></table></figure>
+<p>在CORS Anywhere目录下创建新的app</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hero create [app名称] <span class="comment">#app名称留空会使用随机名称</span></span><br></pre></td></tr></table></figure>
+<p>将CORS Anywhere推送到heroku上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push heroku master</span><br></pre></td></tr></table></figure>
+<p>这时候安装部署完成，可以看到部署完成后的heroku
+app地址，复制下来一会儿要用到。</p>
+<h4 id="hexo配置">Hexo配置</h4>
+<h5 id="主题文件修改">主题文件修改</h5>
+<p>不同的主题可能有不同的修改方式，这里修改的是<a
+target="_blank" rel="noopener" href="https://github.com/cofess/hexo-theme-pure">pure</a>主题。主要做了以下更改：</p>
 <ul>
-<li><p>清理生成的文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo clean</span><br></pre></td></tr></table></figure></li>
-<li><p>生成文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo generate</span><br></pre></td></tr></table></figure></li>
-<li><p>进行预览</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo server</span><br></pre></td></tr></table></figure></li>
-<li><p>新建文章</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo new <span class="string">&quot;NewPostName&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>将gitalk修改为最新版本</li>
+<li>修改<code>var gitalk</code>增加<code>proxy</code>值</li>
 </ul>
-<h4 id="hexo主题修改">Hexo主题修改</h4>
-<p>Hexo有很多主题可供选择，在官网的<a
-target="_blank" rel="noopener" href="https://hexo.io/themes/index.html">主题站</a>挑选，这里选择<a
-target="_blank" rel="noopener" href="https://github.com/cofess/hexo-theme-pure">pure主题</a>。</p>
-<p>在博客站主目录下克隆主题</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/cofess/hexo-theme-pure.git themes/pure</span><br></pre></td></tr></table></figure>
-<p>安装pure主题的依赖包</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-wordcount --save</span><br><span class="line">npm install hexo-generator-json-content --save</span><br><span class="line">npm install hexo-generator-feed --save</span><br><span class="line">npm install hexo-generator-sitemap --save</span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
-<p>复制一份主题配置样例到博客主目录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp themes/pure/_config.yml _config.pure.yml</span><br></pre></td></tr></table></figure>
-<p>修改博客配置<code>_config.yml</code>，将<code>themes: landscape</code>修改为<code>themes: pure</code>。</p>
-<p>根据<a
-target="_blank" rel="noopener" href="https://github.com/cofess/hexo-theme-pure/blob/master/README.cn.md#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE">说明文档</a>对主题配置进行相关修改。</p>
-<h4 id="hexo部署">Hexo部署</h4>
-<p>登录自己的GitHub，新建一个Repository，名字为<code>[GitHub用户名].github.io</code>。</p>
-<p>在Repository的Setting中勾选GitHub Pages功能。</p>
-<p>打开博客配置文件<code>_config.yml</code>修改博客网站的描述部分</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">HulGodhel&#x27;s</span> <span class="string">Blog</span>  <span class="comment"># 博客标题</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;&#x27;</span>  <span class="comment"># 次标题</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&#x27;&#x27;</span>  <span class="comment">#网站描述</span></span><br><span class="line"><span class="attr">keywords:</span>  <span class="comment"># 关键词</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">HulGodhel</span>  <span class="comment"># 作者</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">en</span>  <span class="comment"># 博客网站语言，英语en，中文zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;&#x27;</span>  <span class="comment"># 时区</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>修改站点网址部分</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">http://[Github用户名].github.io</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>修改部署部分</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span> <span class="comment"># 部署方式为git</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">git@github.com:happylzyy/happylzyy.github.io.git</span> <span class="comment"># Repository远程仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span> <span class="comment"># 部署到远程分支master</span></span><br></pre></td></tr></table></figure>
-<p>配置完成后，运行<code>npx hexo clean &amp;&amp; npx hexo g</code>重新生成博客，再运行<code>npx hexo deploy</code>即可部署到GitHub上。</p>
+<p>打开<code>/layout/_common/head.ejs</code>文件，找到</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样Pure主题可以用到最新的gitalk版本。</p>
+<p>打开<code>/layout/_script/_comment/gitalk.ejs</code>，修改两处</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@@ -1,6 +1,6 @@</span><br><span class="line"> &lt;% if (typeof(script) !== &#x27;undefined&#x27; &amp;&amp; script) &#123; %&gt;</span><br><span class="line">   <span class="comment">&lt;!-- &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/gitalk/dist/gitalk.css&quot;&gt; --&gt;</span></span><br><span class="line">-  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">+  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">   <span class="keyword">var</span> gitalk = <span class="keyword">new</span> <span class="title class_">Gitalk</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">@@ -<span class="number">12</span>,<span class="number">7</span> +<span class="number">12</span>,<span class="number">8</span> @@</span></span><br><span class="line"><span class="language-javascript">     <span class="attr">id</span>: <span class="title function_">md5</span>(location.<span class="property">pathname</span>),</span></span><br><span class="line"><span class="language-javascript">     <span class="attr">distractionFreeMode</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="language-javascript">     <span class="attr">language</span>: <span class="string">&#x27;&lt;%= theme.comment.gitalk.language %&gt;&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">-    <span class="attr">enableHotKey</span>: <span class="string">&#x27;&lt;%= theme.comment.gitalk.enableHotKey %&gt;&#x27;</span></span></span><br><span class="line"><span class="language-javascript">+    <span class="attr">enableHotKey</span>: <span class="string">&#x27;&lt;%= theme.comment.gitalk.enableHotKey %&gt;&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">+    <span class="attr">proxy</span>: <span class="string">&#x27;&lt;%= theme.comment.gitalk.proxy %&gt;&#x27;</span></span></span><br><span class="line"><span class="language-javascript">   &#125;)</span></span><br><span class="line"><span class="language-javascript">   gitalk.<span class="title function_">render</span>(<span class="string">&#x27;comments&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">   </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>gitalk@1.6.2</code>改成<code>gitalk@1.7.2</code>以使用最新版本gitalk，<code>var gitalk</code>变量增加一条内容<code>proxy: '&lt;%= theme.comment.gitalk.proxy %&gt;'</code>，注意上一条内容后面加<code>,</code></p>
+<h5 id="修改主题配置">修改主题配置</h5>
+<p>在pure主题配置文件中增加proxy地址，不同的主题gitalk位置可能不同。</p>
+<p>打开<code>_config.pure.yaml</code>文件，在gitalk里增加proxy地址</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">gitalk:</span> <span class="comment"># gitalk. https://gitalk.github.io/</span></span><br><span class="line">    <span class="attr">owner:</span> <span class="comment">#必须. GitHub repository 所有者，可以是个人或者组织。</span></span><br><span class="line">    <span class="attr">admin:</span> <span class="comment">#必须. GitHub repository 的所有者和合作者 (对这个 repository 有写权限的用户)。</span></span><br><span class="line">    <span class="attr">repo:</span>  <span class="comment">#必须. GitHub repository.</span></span><br><span class="line">    <span class="attr">ClientID:</span>  <span class="comment">#必须. GitHub Application Client ID.</span></span><br><span class="line">    <span class="attr">ClientSecret:</span>  <span class="comment">#必须. GitHub Application Client Secret.</span></span><br><span class="line">    <span class="attr">proxy:</span> <span class="string">https://[heroku</span> <span class="string">app</span> <span class="string">地址]/https://github.com/login/oauth/access_token</span></span><br></pre></td></tr></table></figure>
+<p>这样Hexo就修改完了，重新生成和部署Hexo站点到Github，尝试登录Gitalk。</p>
+<h4 id="总结">总结</h4>
+<p>Gitalk 403
+问题是默认的反向代理地址失效造成的，通过使用heroku自建反向代理服务解决Gitalk
+403问题。</p>
 
       
     </div>
@@ -408,7 +415,7 @@ target="_blank" rel="noopener" href="https://github.com/cofess/hexo-theme-pure/b
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://happylzyy.github.io/2021/08/06/how-to-build-blog-with-hexo/" title="使用Hexo建立个人Blog站" target="_blank" rel="external">http://happylzyy.github.io/2021/08/06/how-to-build-blog-with-hexo/</a>
+      <a href="http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/" title="heroku反向代理gitalk解决403问题" target="_blank" rel="external">http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/</a>
     </li>
     
 <!--    <li class="post-copyright-license">
@@ -455,10 +462,10 @@ target="_blank" rel="noopener" href="https://github.com/cofess/hexo-theme-pure/b
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2022/07/03/how-to-render-latex-equation-code-with-katex/" title="Pure主题使用Katex渲染Latex公式"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
     
+    <li class="next">
+      <a href="/2022/07/03/how-to-unlock-cfg-lock/" title="R720-15IKBN MSR 0xE2 CFG Lock 解锁"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
     
     
   </ul>
