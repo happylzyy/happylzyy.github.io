@@ -6,7 +6,7 @@
   <link href="http://happylzyy.github.io/atom.xml" rel="self"/>
   
   <link href="http://happylzyy.github.io/"/>
-  <updated>2022-07-03T14:26:19.193Z</updated>
+  <updated>2022-07-28T16:03:58.946Z</updated>
   <id>http://happylzyy.github.io/</id>
   
   <author>
@@ -15,6 +15,75 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>给hexo网站增加一些有趣的特效</title>
+    <link href="http://happylzyy.github.io/2022/07/28/add-something-interesting/"/>
+    <id>http://happylzyy.github.io/2022/07/28/add-something-interesting/</id>
+    <published>2022-07-28T15:36:46.000Z</published>
+    <updated>2022-07-28T16:03:58.946Z</updated>
+    
+    <content type="html"><![CDATA[<p>给hexo网页添加一些有趣的js来增加乐趣。目前已经添加了两个：鼠标动态线条吸引跟随特效、鼠标文字弹出特效。</p><h4 id="鼠标动态线条吸引跟随">鼠标动态线条吸引跟随</h4><p>虽然没什么用甚至有些遮挡文字阅读，但是特效好看炫酷就完事了。</p><p>打开pure主题文件<code>themes/pure/layout/layout.ejs</code>，在<code>&lt;/body&gt;</code>标签前加一行</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><p>保存修改，重新生成blog查看效果。</p><h4 id="鼠标文字弹出特效">鼠标文字弹出特效</h4><p>作为一名有理想有志向的爱国青年，社会主义核心价值观要牢记心中。</p><p>目前没有发现该特效js的托管CDN，只能全代码添加了。同样是pure主题文件<code>themes/pure/layout/layout.ejs</code>，在<code>&lt;/body&gt;</code>标签前加入以下代码：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="keyword">var</span> a_idx = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript"><span class="title function_">jQuery</span>(<span class="variable language_">document</span>).<span class="title function_">ready</span>(<span class="keyword">function</span>(<span class="params">$</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    $(<span class="string">&quot;body&quot;</span>).<span class="title function_">click</span>(<span class="keyword">function</span>(<span class="params">e</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> a = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="string">&quot;富强&quot;</span>, <span class="string">&quot;民主&quot;</span>, <span class="string">&quot;文明&quot;</span>, <span class="string">&quot;和谐&quot;</span>, <span class="string">&quot;自由&quot;</span>, <span class="string">&quot;平等&quot;</span>, <span class="string">&quot;公正&quot;</span> ,<span class="string">&quot;法治&quot;</span>, <span class="string">&quot;爱国&quot;</span>, <span class="string">&quot;敬业&quot;</span>, <span class="string">&quot;诚信&quot;</span>, <span class="string">&quot;友善&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> $i = $(<span class="string">&quot;&lt;span/&gt;&quot;</span>).<span class="title function_">text</span>(a[a_idx]);</span></span><br><span class="line"><span class="language-javascript">        a_idx = (a_idx + <span class="number">1</span>) % a.<span class="property">length</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> x = e.<span class="property">pageX</span>,</span></span><br><span class="line"><span class="language-javascript">        y = e.<span class="property">pageY</span>;</span></span><br><span class="line"><span class="language-javascript">        $i.<span class="title function_">css</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&quot;z-index&quot;</span>: <span class="number">999999999999999999999999999999999999999999999999999999999999999999999</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&quot;top&quot;</span>: y - <span class="number">20</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&quot;left&quot;</span>: x,</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&quot;position&quot;</span>: <span class="string">&quot;absolute&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&quot;font-weight&quot;</span>: <span class="string">&quot;bold&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&quot;color&quot;</span>: <span class="string">&quot;#ff6651&quot;</span></span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">        $(<span class="string">&quot;body&quot;</span>).<span class="title function_">append</span>($i);</span></span><br><span class="line"><span class="language-javascript">        $i.<span class="title function_">animate</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&quot;top&quot;</span>: y - <span class="number">180</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="string">&quot;opacity&quot;</span>: <span class="number">0</span></span></span><br><span class="line"><span class="language-javascript">        &#125;,</span></span><br><span class="line"><span class="language-javascript">        <span class="number">1500</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">function</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            $i.<span class="title function_">remove</span>();</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript">&#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><p>特别地是，代码已经展示了如何自定义，有需要可以自己定制弹出文字。</p><p>保存文件，重新生成网页查看效果。</p><h4 id="网页宠物">网页宠物</h4><p>TODO</p><p>未完待续......</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;给hexo网页添加一些有趣的js来增加乐趣。目前已经添加了两个：鼠标动态线条吸引跟随特效、鼠标文字弹出特效。&lt;/p&gt;
+&lt;h4 id=&quot;鼠标动态线条吸引跟随&quot;&gt;鼠标动态线条吸引跟随&lt;/h4&gt;
+&lt;p&gt;虽然没什么用甚至有些遮挡文字阅读，但是特效好看炫酷就完事了。&lt;/p&gt;
+&lt;p&gt;打</summary>
+      
+    
+    
+    
+    
+    <category term="javascript" scheme="http://happylzyy.github.io/tags/javascript/"/>
+    
+    <category term="hexo" scheme="http://happylzyy.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>manjaro-linux-bumblebee</title>
+    <link href="http://happylzyy.github.io/2022/07/12/manjaro-linux-bumblebee/"/>
+    <id>http://happylzyy.github.io/2022/07/12/manjaro-linux-bumblebee/</id>
+    <published>2022-07-12T06:38:48.000Z</published>
+    <updated>2022-07-12T06:38:48.397Z</updated>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+      
+      
+    <summary type="html">
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>HMCL-missing-openjfx</title>
+    <link href="http://happylzyy.github.io/2022/07/12/HMCL-missing-openjfx/"/>
+    <id>http://happylzyy.github.io/2022/07/12/HMCL-missing-openjfx/</id>
+    <published>2022-07-12T06:36:18.000Z</published>
+    <updated>2022-07-12T06:36:18.116Z</updated>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+      
+      
+    <summary type="html">
+</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>heroku反向代理gitalk解决403问题</title>

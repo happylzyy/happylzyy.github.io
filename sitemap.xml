@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://happylzyy.github.io/2022/07/28/add-something-interesting/</loc>
+    
+    <lastmod>2022-07-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://happylzyy.github.io/2022/07/12/manjaro-linux-bumblebee/</loc>
+    
+    <lastmod>2022-07-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://happylzyy.github.io/2022/07/12/HMCL-missing-openjfx/</loc>
+    
+    <lastmod>2022-07-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/</loc>
     
     <lastmod>2022-07-03</lastmod>
@@ -76,57 +103,64 @@
 
   <url>
     <loc>http://happylzyy.github.io/</loc>
-    <lastmod>2022-07-03</lastmod>
+    <lastmod>2022-07-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
+    <loc>http://happylzyy.github.io/tags/javascript/</loc>
+    <lastmod>2022-07-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://happylzyy.github.io/tags/hexo/</loc>
-    <lastmod>2022-07-03</lastmod>
+    <lastmod>2022-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://happylzyy.github.io/tags/katex/</loc>
-    <lastmod>2022-07-03</lastmod>
+    <lastmod>2022-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://happylzyy.github.io/tags/hackintosh/</loc>
-    <lastmod>2022-07-03</lastmod>
+    <lastmod>2022-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://happylzyy.github.io/tags/bios/</loc>
-    <lastmod>2022-07-03</lastmod>
+    <lastmod>2022-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://happylzyy.github.io/tags/heroku/</loc>
-    <lastmod>2022-07-03</lastmod>
+    <lastmod>2022-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://happylzyy.github.io/tags/gitalk/</loc>
-    <lastmod>2022-07-03</lastmod>
+    <lastmod>2022-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://happylzyy.github.io/tags/proxy/</loc>
-    <lastmod>2022-07-03</lastmod>
+    <lastmod>2022-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
