@@ -65,23 +65,34 @@
   </entry>
   
   <entry>
-    <title>HMCL-missing-openjfx</title>
+    <title>ArchLinux中HMCL启动器提示缺少JavaFX的解决方法</title>
     <link href="http://happylzyy.github.io/2022/07/12/HMCL-missing-openjfx/"/>
     <id>http://happylzyy.github.io/2022/07/12/HMCL-missing-openjfx/</id>
     <published>2022-07-12T06:36:18.000Z</published>
-    <updated>2022-07-12T06:36:18.116Z</updated>
+    <updated>2023-09-17T11:52:24.815Z</updated>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h4 id="问题描述">问题描述</h4><p>在Arch Linux系统中已经安装了以下默认版本的软件包：</p><ul><li>java-openjfx</li><li>jdk-openjdk</li><li>jre-openjdk</li><li>jre-openjdk-headless</li></ul><p>运行HMCL的时候会提示找不到JavaFX：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[org.jackhuang.hmcl.util.SelfDependencyPatcher.patch/INFO] Missing JavaFX dependencies, attempting to patch <span class="keyword">in</span> missing classes</span><br><span class="line">[org.jackhuang.hmcl.util.SelfDependencyPatcher.loadFromCache/INFO]  - Loading dependencies...</span><br><span class="line">[org.jackhuang.hmcl.util.SelfDependencyPatcher.patch/INFO]  - Done!</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>HMCL是一个很好用的minecraft启动器，它能够自动到网络上下载所需的依赖，但是系统本身已经安装了所需依赖，为什么不用呢？</p><p>据了解，JavaFX不再是OpenJDK的一部分了，因此用默认的OpenJDK运行jar会出现找不到JavaFX模块的问题。</p><p>解决的方法是手动添加JavaFX模块。由于某种未知的原因，ArchLinux中，java-openjfx包会将JavaFX库安装到OpenJDK的lib目录中，导致以下添加方式出现错误</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ java --module-path /usr/lib/jvm/java-20-openjdk/lib   --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web -jar HMCL-3.5.5.jar</span><br><span class="line">Error occurred during initialization of boot layer</span><br><span class="line">java.lang.LayerInstantiationException: Package jdk.internal.jrtfs <span class="keyword">in</span> both module java.base and module jrt.fs</span><br></pre></td></tr></table></figure><p>这是因为，在顶级目录中不包含module-info.class的jar文件被视为自动模块自动加载，jrt.fs包含编译为JDK8的“jrt”文件系统提供程序的副本，最终结果是出现两个包含jdk.internal.jrtfs包（以及许多其他包）的冲突模块。解决冲突的方法是更加详细地描述添加模块的路径信息。</p><h4 id="解决方法">解决方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/sh</span></span><br><span class="line"><span class="built_in">export</span> PATH_TO_FX=/usr/lib/jvm/java-20-openjdk/lib</span><br><span class="line"></span><br><span class="line">java --module-path <span class="variable">$PATH_TO_FX</span>/javafx.base.jar:<span class="variable">$PATH_TO_FX</span>/javafx.controls.jar:<span class="variable">$PATH_TO_FX</span>/javafx.fxml.jar:<span class="variable">$PATH_TO_FX</span>/javafx.graphics.jar:<span class="variable">$PATH_TO_FX</span>/javafx.media.jar:<span class="variable">$PATH_TO_FX</span>/javafx.swing.jar:<span class="variable">$PATH_TO_FX</span>/javafx.web.jar:<span class="variable">$PATH_TO_FX</span>/javafx-swt.jar --add-modules ALL-MODULE-PATH -jar HMCL-3.5.5.jar</span><br></pre></td></tr></table></figure>]]></content>
     
     
       
       
-    <summary type="html">
-</summary>
+    <summary type="html">&lt;h4 id=&quot;问题描述&quot;&gt;问题描述&lt;/h4&gt;
+&lt;p&gt;在Arch Linux系统中已经安装了以下默认版本的软件包：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;java-openjfx&lt;/li&gt;
+&lt;li&gt;jdk-openjdk&lt;/li&gt;
+&lt;li&gt;jre-openjdk&lt;/li&gt;
+&lt;li&gt;jre-o</summary>
       
     
     
     
+    
+    <category term="hmcl" scheme="http://happylzyy.github.io/tags/hmcl/"/>
+    
+    <category term="archlinux" scheme="http://happylzyy.github.io/tags/archlinux/"/>
+    
+    <category term="javafx" scheme="http://happylzyy.github.io/tags/javafx/"/>
     
   </entry>
   
