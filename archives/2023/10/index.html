@@ -17,21 +17,16 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Pure主题使用Katex渲染Latex公式 | HulGodhel&#39;s Blog</title>
-  <meta name="description" content="Pure主题的数学公式功能并不完善，为了支持Katex，对Pure主题和Hexo配置做了大量修改。 Hexo配置修改  Hexo自带的渲染插件不支持数学公式，因此先卸载自带的渲染插件 npm uninstall hexo-renderer-marked --save 删除其他任何与数学公式有关的插件，如hexo-math、markdown-it-katex等等； 删除_config.yaml配置文">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Pure主题使用Katex渲染Latex公式">
-<meta property="og:url" content="http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/index.html">
+  <title>Archive: 2023/10 | HulGodhel&#39;s Blog</title>
+  <meta property="og:type" content="website">
+<meta property="og:title" content="HulGodhel&#39;s Blog">
+<meta property="og:url" content="http://happylzyy.github.io/archives/2023/10/index.html">
 <meta property="og:site_name" content="HulGodhel&#39;s Blog">
-<meta property="og:description" content="Pure主题的数学公式功能并不完善，为了支持Katex，对Pure主题和Hexo配置做了大量修改。 Hexo配置修改  Hexo自带的渲染插件不支持数学公式，因此先卸载自带的渲染插件 npm uninstall hexo-renderer-marked --save 删除其他任何与数学公式有关的插件，如hexo-math、markdown-it-katex等等； 删除_config.yaml配置文">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-07-03T05:57:00.000Z">
-<meta property="article:modified_time" content="2022-07-03T06:03:48.409Z">
 <meta property="article:author" content="HulGodhel">
-<meta property="article:tag" content="katex">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/index.html">
+  <link rel="canonical" href="http://happylzyy.github.io/archives/2023/10/index.html">
   
     <link rel="alternate" href="/atom.xml" title="HulGodhel&#39;s Blog" type="application/atom+xml">
   
@@ -41,15 +36,6 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
-
-    <!-- The loading of KaTeX is deferred to speed up page rendering -->
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
-
-    <!-- To automatically render math in text elements, include the auto-render extension: -->
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
-        onload="renderMathInElement(document.body);"></script>
   
   
   
@@ -327,157 +313,48 @@
   
   
 <main class="main" role="main">
-  <div class="content">
-  <article id="post-how-to-render-latex-equation-code-with-katex" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  	<article class="content article article-archives article-type-list" itemscope="">
+	    <header class="article-header">
+	      <h1 itemprop="title">Archive: 2023/10</h1>
+	      <p class="text-muted">Total 8 articles</p>
+	    </header>
+	    <div class="article-body">
+	      
+  
+  
     
-    <div class="article-header">
+    
       
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Pure主题使用Katex渲染Latex公式
-    </h1>
-  
-
       
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2022/07/03/how-to-render-latex-equation-code-with-katex/" class="article-date">
-	  <time datetime="2022-07-03T05:57:00.000Z" itemprop="datePublished">2022-07-03</time>
-	</a>
-</span>
-        
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/katex/" rel="tag">katex</a>
-  </span>
-
-
-        
-
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/07/03/how-to-render-latex-equation-code-with-katex/#comments" class="article-comment-link">Comments</a></span>
-        
-      </div>
-    </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
-      
-        <p>Pure主题的数学公式功能并不完善，为了支持Katex，对Pure主题和Hexo配置做了大量修改。</p>
-<h4 id="hexo配置修改">Hexo配置修改</h4>
-<ul>
-<li><p>Hexo自带的渲染插件不支持数学公式，因此先卸载自带的渲染插件</p>
-<p><code>npm uninstall hexo-renderer-marked --save</code></p></li>
-<li><p>删除其他任何与数学公式有关的插件，如<code>hexo-math</code>、<code>markdown-it-katex</code>等等；</p></li>
-<li><p>删除<code>_config.yaml</code>配置文件里与数学公式有关的部分；</p></li>
-<li><p>安装新的渲染插件</p>
-<p><code>npm install hexo-renderer-pandoc --save</code></p></li>
-<li><p>安装依赖的软件包pandoc，打开终端运行<code>yay -Syu pandoc</code>；</p></li>
-</ul>
-<h4 id="pure主题修改">Pure主题修改</h4>
-<p>打开<code>head.ejs</code>文件，该文件位于<code>themes/pure/layout/_common/</code>，找到</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (page.mathjax) &#123; %&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
-<p>修改为</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (page.katex) &#123; %&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css&quot;</span> <span class="attr">integrity</span>=<span class="string">&quot;sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- The loading of KaTeX is deferred to speed up page rendering --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js&quot;</span> <span class="attr">integrity</span>=<span class="string">&quot;sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- To automatically render math in text elements, include the auto-render extension: --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js&quot;</span> <span class="attr">integrity</span>=<span class="string">&quot;sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">onload</span>=<span class="string">&quot;renderMathInElement(document.body);&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
-<p>删除<code>themes/pure/layout/_script/mathjax.ejs</code>文件。</p>
-<h4 id="启用数学公式">启用数学公式</h4>
-<p>需要写公式的文章在开头加入</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">katex:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h3 id="来测试一下公式渲染吧">来测试一下公式渲染吧！</h3>
-<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>&#123;cases&#125;</span><br><span class="line"><span class="keyword">\nabla</span><span class="keyword">\times</span><span class="keyword">\vec</span>&#123;E&#125;=-<span class="keyword">\frac</span>&#123;<span class="keyword">\partial</span><span class="keyword">\vec</span>&#123;B&#125;&#125;&#123;<span class="keyword">\partial</span> t&#125;<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\nabla</span><span class="keyword">\times</span><span class="keyword">\vec</span>&#123;H&#125;=<span class="keyword">\vec</span>&#123;J<span class="built_in">_</span>v&#125;+<span class="keyword">\frac</span>&#123;<span class="keyword">\partial</span><span class="keyword">\vec</span>&#123;D&#125;&#125;&#123;<span class="keyword">\partial</span> t&#125;<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\nabla</span><span class="keyword">\cdot</span><span class="keyword">\vec</span>&#123;D&#125;=<span class="keyword">\rho</span><span class="built_in">_</span>v<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\nabla</span><span class="keyword">\cdot</span><span class="keyword">\vec</span>&#123;B&#125;=0</span><br><span class="line"><span class="keyword">\end</span>&#123;cases&#125;<span class="keyword">\quad</span></span><br><span class="line"><span class="keyword">\begin</span>&#123;cases&#125;</span><br><span class="line"><span class="keyword">\vec</span>&#123;D&#125;=<span class="keyword">\epsilon</span><span class="keyword">\vec</span>&#123;E&#125;<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\vec</span>&#123;B&#125;=<span class="keyword">\mu</span><span class="keyword">\vec</span>&#123;H&#125;<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\vec</span>&#123;J<span class="built_in">_</span>v&#125;=<span class="keyword">\sigma</span><span class="keyword">\vec</span>&#123;E&#125;</span><br><span class="line"><span class="keyword">\end</span>&#123;cases&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
-<p>渲染为 <span class="math display">\[
-\begin{cases}
-\nabla\times\vec{E}=-\frac{\partial\vec{B}}{\partial t}\\
-\nabla\times\vec{H}=\vec{J_v}+\frac{\partial\vec{D}}{\partial t}\\
-\nabla\cdot\vec{D}=\rho_v\\
-\nabla\cdot\vec{B}=0
-\end{cases}\quad
-\begin{cases}
-\vec{D}=\epsilon\vec{E}\\
-\vec{B}=\mu\vec{H}\\
-\vec{J_v}=\sigma\vec{E}
-\end{cases}
-\]</span></p>
-
-      
-    </div>
-    <div class="article-footer">
-      <blockquote class="mt-2x">
-  <ul class="post-copyright list-unstyled">
+      <section class="panel panel-default b-no">
+        <div class="panel-heading" role="tab">
+          <h3 class="panel-title">
+            <a data-toggle="collapse" href="#collapse2023" aria-expanded="true">
+              <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
+              2023
+            </a>
+            <!-- <a href="/archives/2023" class="archive-year">2023</a> -->
+          </h3>
+        </div>
+        <div id="collapse2023" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2023">
+        <div class="panel-body">
+          <div class="collection">
     
-    <li class="post-copyright-link hidden-xs">
-      <strong>本文链接：</strong>
-      <a href="http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/" title="Pure主题使用Katex渲染Latex公式" target="_blank" rel="external">http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/</a>
-    </li>
     
-<!--    <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
--->
-</blockquote>
-
-
-<div class="panel panel-default panel-badger">
-  <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="https://github.com/happylzyy" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/happylzyy" target="_blank"><span class="text-dark">HulGodhel</span><small class="ml-1x">Student &amp; Engineer</small></a></h3>
-        <div>Up to something not serious</div>
-      </div>
-    </figure>
-  </div>
-</div>
-
-
-    </div>
-  </article>
-  
-    
-  <section id="comments">
-  	
-           
-    
-  </section>
+<a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" class="collection-item"   itemprop="url">
+  <time datetime="2023-10-01T14:59:25.000Z" itemprop="datePublished">2023-10-01</time>
+  <span>&nbsp;&nbsp;&nbsp;</span> 在Manjaro Linux上启用SecureBoot
+</a>
 
 
   
-</div>
-
-  <nav class="bar bar-footer clearfix" data-stick-bottom>
-  <div class="bar-inner">
   
-  <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/2022/07/03/how-to-unlock-cfg-lock/" title="R720-15IKBN MSR 0xE2 CFG Lock 解锁"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/2021/08/06/how-to-build-blog-with-hexo/" title="使用Hexo建立个人Blog站"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-  </ul>
-  
-  
-  
-  <div class="bar-right">
-    
-    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
-    
-  </div>
-  </div>
-</nav>
+    </div></div></div></section>
   
 
-
+	    </div>
+  	</article>
+  	 	
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -533,33 +410,6 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-
-   
-
-
-
-
-   
-    
-  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
-  <script src="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
-  <script type="text/javascript">
-  var gitalk = new Gitalk({
-    clientID: '8b0afced256db8a7c026',
-    clientSecret: '4a66d812a636c078759bf9626e895489728d211a',
-    repo: 'happylzyy.github.io',
-    owner: 'happylzyy',
-    admin: ['happylzyy'],
-    id: md5(location.pathname),
-    distractionFreeMode: true,
-    language: '',
-    enableHotKey: '',
-    proxy: 'https://floating-island-47048.herokuapp.com/https://github.com/login/oauth/access_token'
-  })
-  gitalk.render('comments')
-  </script>
-      
 
 
 
