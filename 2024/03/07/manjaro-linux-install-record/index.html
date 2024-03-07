@@ -321,6 +321,18 @@
 
   
   
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#manjaro-linux-setup"><span class="toc-number">1.</span> <span class="toc-text">Manjaro Linux Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#install"><span class="toc-number">1.1.</span> <span class="toc-text">Install</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#system-modification"><span class="toc-number">1.2.</span> <span class="toc-text">System modification</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#repository"><span class="toc-number">1.2.1.</span> <span class="toc-text">Repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shell"><span class="toc-number">1.2.2.</span> <span class="toc-text">Shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gpu-switch"><span class="toc-number">1.2.3.</span> <span class="toc-text">GPU Switch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fonts"><span class="toc-number">1.2.4.</span> <span class="toc-text">Fonts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#command"><span class="toc-number">1.2.5.</span> <span class="toc-text">Command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#appearance"><span class="toc-number">1.2.6.</span> <span class="toc-text">Appearance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#swapfile"><span class="toc-number">1.2.7.</span> <span class="toc-text">swapfile</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#install-and-config-application"><span class="toc-number">1.3.</span> <span class="toc-text">Install and config
+application</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git"><span class="toc-number">1.3.1.</span> <span class="toc-text">git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#internet-technology"><span class="toc-number">1.3.2.</span> <span class="toc-text">Internet Technology</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fcitx5-and-rime"><span class="toc-number">1.3.3.</span> <span class="toc-text">fcitx5 and rime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vim"><span class="toc-number">1.3.4.</span> <span class="toc-text">vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#typora"><span class="toc-number">1.3.5.</span> <span class="toc-text">typora</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#albert"><span class="toc-number">1.3.6.</span> <span class="toc-text">albert</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wps"><span class="toc-number">1.3.7.</span> <span class="toc-text">WPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gimp"><span class="toc-number">1.3.8.</span> <span class="toc-text">GIMP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#node.js"><span class="toc-number">1.3.9.</span> <span class="toc-text">Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#other-app-without-configuration"><span class="toc-number">1.3.10.</span> <span class="toc-text">Other app without
+configuration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#secure-boot-and-luks-tpm"><span class="toc-number">1.4.</span> <span class="toc-text">Secure Boot and LUKS TPM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#prepare"><span class="toc-number">1.4.1.</span> <span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install-bootloader"><span class="toc-number">1.4.2.</span> <span class="toc-text">Install bootloader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#configure-initramfs"><span class="toc-number">1.4.3.</span> <span class="toc-text">Configure initramfs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mkinitcpio.conf"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">mkinitcpio.conf</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#crypttab.initramfs"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">crypttab.initramfs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cmdline"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">cmdline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linux.preset"><span class="toc-number">1.4.3.4.</span> <span class="toc-text">linux.preset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#build-uki"><span class="toc-number">1.4.3.5.</span> <span class="toc-text">build UKI</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#secure-boot"><span class="toc-number">1.4.4.</span> <span class="toc-text">Secure Boot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unlock-luks-via-tpm"><span class="toc-number">1.4.5.</span> <span class="toc-text">Unlock LUKS via TPM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#references"><span class="toc-number">1.4.6.</span> <span class="toc-text">References</span></a></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+
 <main class="main" role="main">
   <div class="content">
   <article id="post-manjaro-linux-install-record" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
@@ -685,6 +697,14 @@ To Using Secure Boot and TPM2 to unlock LUKS partition on boot</a></li>
     </li>
     
     
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
   </ul>
   
   
@@ -696,6 +716,7 @@ To Using Secure Boot and TPM2 to unlock LUKS partition on boot</a></li>
   </div>
   </div>
 </nav>
+
   
 
 
