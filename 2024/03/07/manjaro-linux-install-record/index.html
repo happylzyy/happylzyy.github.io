@@ -26,7 +26,7 @@
 <meta property="og:description" content="Manjaro Linux Setup Install  partition 1234567NAME                                          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTSnvme0n1                                       259:0    0 931.5G  0 dis">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-03-07T13:37:48.000Z">
-<meta property="article:modified_time" content="2024-03-23T07:35:46.227Z">
+<meta property="article:modified_time" content="2024-05-03T08:12:21.454Z">
 <meta property="article:author" content="HulGodhel">
 <meta property="article:tag" content="manjaro">
 <meta property="article:tag" content="secureboot">
@@ -615,7 +615,7 @@ boot system.</p>
 <p>change permission for excutation</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chmod</span> a+x /usr/share/libalpm/scripts/sbsign-all</span><br></pre></td></tr></table></figure>
 <p>copy it for mkinitcpio post hook</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> /usr/share/libalpm/scripts/sbsign-all /usr/lib/initcpio/post/sbctl</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> /usr/share/libalpm/scripts/sbsign-all /etc/initcpio/post/sbctl</span><br></pre></td></tr></table></figure>
 <p>then run the script manually at the first time</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/share/libalpm/scripts/sbsign-all</span><br></pre></td></tr></table></figure>
 <p>Modify the sbctl pacman hook</p>
