@@ -26,7 +26,7 @@
 <meta property="og:description" content="Manjaro Linux Setup Install  partition 1234567NAME                                          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTSnvme0n1                                       259:0    0 931.5G  0 dis">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-03-07T13:37:48.000Z">
-<meta property="article:modified_time" content="2024-05-03T08:12:21.454Z">
+<meta property="article:modified_time" content="2024-05-04T03:51:11.043Z">
 <meta property="article:author" content="HulGodhel">
 <meta property="article:tag" content="manjaro">
 <meta property="article:tag" content="secureboot">
@@ -572,7 +572,7 @@ see bootloader’s menu and stop countdown if needed.</p>
 <h4 id="mkinitcpio.conf">mkinitcpio.conf</h4>
 <p>Replace HOOKS array in <code>/etc/mkinitcpio.conf</code> and save old
 ones commented in the end of the file just in case:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OLD_HOOKS=$(<span class="built_in">cat</span> /etc/mkinitcpio.conf | grep <span class="string">&quot;^HOOKS=(&quot;</span>)</span><br><span class="line">sed -i <span class="string">&#x27;s|&#x27;</span><span class="string">&quot;<span class="variable">$&#123;OLD_HOOKS&#125;</span>&quot;</span><span class="string">&#x27;|HOOKS=(base systemd keyboard sd-vconsole keymap autodetect kms modconf consolefont plymouth block sd-encrypt resume filesystems fsck)|&#x27;</span> /etc/mkinitcpio.conf &amp;&amp; <span class="built_in">echo</span> <span class="string">&#x27;#previous_&#x27;</span><span class="variable">$OLD_HOOKS</span> |<span class="built_in">tee</span> -a /etc/mkinitcpio.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OLD_HOOKS=$(<span class="built_in">cat</span> /etc/mkinitcpio.conf | grep <span class="string">&quot;^HOOKS=(&quot;</span>)</span><br><span class="line">sed -i <span class="string">&#x27;s|&#x27;</span><span class="string">&quot;<span class="variable">$&#123;OLD_HOOKS&#125;</span>&quot;</span><span class="string">&#x27;|HOOKS=(base systemd autodetect modconf kms keyboard sd-vconsole sd-encrypt block filesystems fsck)|&#x27;</span> /etc/mkinitcpio.conf &amp;&amp; <span class="built_in">echo</span> <span class="string">&#x27;#previous_&#x27;</span><span class="variable">$OLD_HOOKS</span> |<span class="built_in">tee</span> -a /etc/mkinitcpio.conf</span><br></pre></td></tr></table></figure>
 <p>Also for better (de)compression speed/efficiency ratio consider
 setting <code>COMPRESSION="zstd"</code> in your
 <code>/etc/mkinitcpio.conf</code> if not set already. Note though that
