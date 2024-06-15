@@ -26,7 +26,7 @@
 <meta property="og:description" content="Manjaro Linux Setup Install  partition 1234567NAME                                          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTSnvme0n1                                       259:0    0 931.5G  0 dis">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-03-07T13:37:48.000Z">
-<meta property="article:modified_time" content="2024-05-04T03:51:11.043Z">
+<meta property="article:modified_time" content="2024-06-15T06:13:05.524Z">
 <meta property="article:author" content="HulGodhel">
 <meta property="article:tag" content="manjaro">
 <meta property="article:tag" content="secureboot">
@@ -649,8 +649,8 @@ suggest remove slot 1 if it’s occupied by <code>crypto_keyfile</code> at
 the moment (since it’s not safe to use crypto_keyfile in configuration
 we’re building).</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cryptsetup luksKillSlot /dev/nvme0n1p5 1</span><br><span class="line">sudo <span class="built_in">rm</span> /crypto_keyfile.bin</span><br></pre></td></tr></table></figure>
-<p>Then seal the LUKS key into TPM</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemd-cryptenroll /dev/nvme0n1p5 --tpm2-device=auto</span><br></pre></td></tr></table></figure>
+<p>Then seal the LUKS key into TPM with PCR 7</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemd-cryptenroll /dev/nvme0n1p5 --tpm2-device=auto --tpm2-pcrs=7</span><br></pre></td></tr></table></figure>
 <h3 id="references">References</h3>
 <ol type="1">
 <li>https://forum.manjaro.org/t/howto-using-secure-boot-and-tpm2-to-unlock-luks-partition-on-boot/101626</li>
