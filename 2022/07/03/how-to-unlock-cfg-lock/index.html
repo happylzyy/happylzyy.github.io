@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>R720-15IKBN MSR 0xE2 CFG Lock 解锁 | happylzyy&#39;s Blog</title>
+  <meta name="description" content="什么是 MSR CFG Lock 解锁？ MSR（Model Specific Register）是x86架构中的概念，指的是在x86架构处理器中，一系列用于控制CPU运行、功能开关、调试、跟踪程序执行、监测CPU性能等方面的寄存器。 大多数UEFI主板厂家，锁定了MSR寄存器的第15位为只读，也就是MSR 0xE2 Locking（BIOS 中叫CFG Lock）。苹果macOS系统的电源管理、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R720-15IKBN MSR 0xE2 CFG Lock 解锁">
+<meta property="og:url" content="http://happylzyy.github.io/2022/07/03/how-to-unlock-cfg-lock/index.html">
+<meta property="og:site_name" content="happylzyy&#39;s Blog">
+<meta property="og:description" content="什么是 MSR CFG Lock 解锁？ MSR（Model Specific Register）是x86架构中的概念，指的是在x86架构处理器中，一系列用于控制CPU运行、功能开关、调试、跟踪程序执行、监测CPU性能等方面的寄存器。 大多数UEFI主板厂家，锁定了MSR寄存器的第15位为只读，也就是MSR 0xE2 Locking（BIOS 中叫CFG Lock）。苹果macOS系统的电源管理、">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-03T06:15:11.000Z">
+<meta property="article:modified_time" content="2022-07-03T06:24:49.000Z">
+<meta property="article:author" content="happylzyy">
+<meta property="article:tag" content="bios">
+<meta property="article:tag" content="hackintosh">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://happylzyy.github.io/2022/07/03/how-to-unlock-cfg-lock/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="happylzyy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/happylzyy" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">happylzyy</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student &amp; Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Somewhere, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Something interesting</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/archlinux/" rel="tag">archlinux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bios/" rel="tag">bios</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitalk/" rel="tag">gitalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hackintosh/" rel="tag">hackintosh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/" rel="tag">heroku</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hmcl/" rel="tag">hmcl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javafx/" rel="tag">javafx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/katex/" rel="tag">katex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/luks/" rel="tag">luks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/manjaro/" rel="tag">manjaro</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureboot/" rel="tag">secureboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tpm/" rel="tag">tpm</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/archlinux/" style="font-size: 13px;">archlinux</a> <a href="/tags/bios/" style="font-size: 13.5px;">bios</a> <a href="/tags/gitalk/" style="font-size: 13px;">gitalk</a> <a href="/tags/hackintosh/" style="font-size: 13px;">hackintosh</a> <a href="/tags/heroku/" style="font-size: 13px;">heroku</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/hmcl/" style="font-size: 13px;">hmcl</a> <a href="/tags/javafx/" style="font-size: 13px;">javafx</a> <a href="/tags/javascript/" style="font-size: 13px;">javascript</a> <a href="/tags/katex/" style="font-size: 13px;">katex</a> <a href="/tags/linux/" style="font-size: 13.5px;">linux</a> <a href="/tags/luks/" style="font-size: 13px;">luks</a> <a href="/tags/manjaro/" style="font-size: 14px;">manjaro</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/secureboot/" style="font-size: 13.5px;">secureboot</a> <a href="/tags/tpm/" style="font-size: 13px;">tpm</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/09/enable-secure-boot-and-luks-tpm/" class="title">How to enable both secure boot and LUKS with TPM</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-09T14:16:24.000Z" itemprop="datePublished">2024-08-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/03/07/manjaro-linux-install-record/" class="title">Manjaro Linux Reinstall Record</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-03-07T13:37:48.000Z" itemprop="datePublished">2024-03-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" class="title">在Manjaro Linux上启用SecureBoot</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-01T14:59:25.000Z" itemprop="datePublished">2023-10-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/28/add-something-interesting/" class="title">给hexo网站增加一些有趣的特效</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-28T15:36:46.000Z" itemprop="datePublished">2022-07-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/12/HMCL-missing-openjfx/" class="title">ArchLinux中HMCL启动器提示缺少JavaFX的解决方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-12T06:36:18.000Z" itemprop="datePublished">2022-07-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-msr-cfg-lock-%E8%A7%A3%E9%94%81"><span class="toc-number">1.</span> <span class="toc-text">什么是 MSR CFG Lock 解锁？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87"><span class="toc-number">3.</span> <span class="toc-text">工具准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bios-%E9%99%8D%E7%BA%A7"><span class="toc-number">4.</span> <span class="toc-text">BIOS 降级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E5%8F%96%E4%B8%BB%E6%9D%BFbios"><span class="toc-number">5.</span> <span class="toc-text">提取主板BIOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E5%8F%96bios%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">提取BIOS信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E9%9C%80%E8%A6%81%E7%9A%84%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="toc-number">7.</span> <span class="toc-text">寻找需要的偏移量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9bios%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="toc-number">8.</span> <span class="toc-text">修改BIOS偏移量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E8%A7%A3%E9%94%81%E6%83%85%E5%86%B5"><span class="toc-number">9.</span> <span class="toc-text">检查解锁情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9opencore%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">10.</span> <span class="toc-text">修改OpenCore配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">11.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-how-to-unlock-cfg-lock" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      R720-15IKBN MSR 0xE2 CFG Lock 解锁
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/07/03/how-to-unlock-cfg-lock/" class="article-date">
+	  <time datetime="2022-07-03T06:15:11.000Z" itemprop="datePublished">2022-07-03</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/bios/" rel="tag">bios</a>, <a class="article-tag-link-link" href="/tags/hackintosh/" rel="tag">hackintosh</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/07/03/how-to-unlock-cfg-lock/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.7k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 6(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="什么是-msr-cfg-lock-解锁">什么是 MSR CFG Lock 解锁？</h4>
+<p>MSR（Model Specific
+Register）是x86架构中的概念，指的是在x86架构处理器中，一系列用于控制CPU运行、功能开关、调试、跟踪程序执行、监测CPU性能等方面的寄存器。</p>
+<p>大多数UEFI主板厂家，锁定了MSR寄存器的第15位为只读，也就是MSR 0xE2
+Locking（BIOS 中叫CFG
+Lock）。苹果macOS系统的电源管理、CPU的P-state、C-state放在MSR寄存器里，MSR
+0xE2被锁定为只读后，macOS系统的电源管理驱动扩展AppleIntelCPUPowerManagement一旦尝试去写入数据，系统就会马上崩溃。有些主板上有选项“CFG
+Lock”，其说明内容为”关闭或开启MSR
+0xE2″，可以手动开关，有些主板则屏蔽了这个选项。当使用黑苹果时，必须解锁MSR
+0xE2，否则无法使用苹果的原生电源管理。</p>
+<p>联想等一些 OEM
+设置了BIOS内部的变量，也就是说固化到了BIOS的固件代码里，如果不对 BIOS
+进行物理修改就无法解锁它，对于这种情况，需要修改BIOS才能解锁CFG
+Lock。Lenovo R720-15IKBN就属于上述情况，因此要对BIOS进行修改。</p>
+<p><strong>刷机有风险，搞机须谨慎！失败会造成电脑变砖，没有救砖技术请不要尝试！本文仅供参考，对于读者自己造成的损坏不承担任何责任！</strong></p>
+<h4 id="环境准备">环境准备</h4>
+<ul>
+<li><strong>插了稳定交流电源</strong>的Lenovo R720-15IKBN
+笔记本电脑</li>
+<li>Windows 10，因为大部分操作都在Win环境下进行</li>
+<li>macOS与OpenCore</li>
+<li>一个格式化文件系统为FAT32的U盘</li>
+<li>安静的没有人打扰您的环境</li>
+</ul>
+<h4 id="工具准备">工具准备</h4>
+<ul>
+<li><p>Lenovo 官方 <code>4KCN27WW</code>版 BIOS</p>
+<p>联想官方BIOS通常具有写保护措施，而27版BIOS没有写保护因此可以进行修改，BIOS降级程序可在官网输入主机编号后寻找下载到。</p>
+<p>下载地址：https://newsupport.lenovo.com.cn/</p></li>
+<li><p>Intel CSME System Tools</p>
+<p>用于Dump BIOS 固件，根据不同的平台选择不同的版本，这里选择v11
+r37版。</p>
+<p>下载地址：https://comsystem-tlt.ru/obzori/me-txe-region</p></li>
+<li><p>UEFITool</p>
+<p>查找BIOS中相关变量（字符串）的工具。</p>
+<p>下载地址：https://github.com/LongSoft/UEFITool/releases</p></li>
+<li><p>IRFExtractor</p>
+<p>将UEFITool得到的PE32 image转换成文本的工具。</p>
+<p>下载地址：https://github.com/LongSoft/Universal-IFR-Extractor/releases</p></li>
+<li><p>easyUEFI或Bootice</p>
+<p>用于修改UEFI启动项。</p></li>
+</ul>
+<h4 id="bios-降级">BIOS 降级</h4>
+<p>进入UEFI BIOS 设置，将BIOS Back
+Flash设为Enabled，允许BIOS回滚刷新；</p>
+<p>重启进入Windows，运行从官网下载的27版BIOS降级程序，安装完成后系统自动重启，开始降级过程。
+<strong>注意在降级过程中一定不要断开电源！</strong>
+BIOS刷写成功后，电脑会自动重启数次，属于正常现象，不要断电源。</p>
+<p>刷写后可能无法进入Win系统，重新进入UEFI
+BIOS设置，关闭安全启动，将SATA控制器工作模式设置为AHCI，保存设置后重启就能进入系统。</p>
+<h4 id="提取主板bios">提取主板BIOS</h4>
+<p>进入系统后，打开<code>Intel CSME System Tools v11 r37/Flash Programming Tool/WIN64</code>，新建文本文档，输入以下代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /d %~dp0</span><br><span class="line">fptw64.exe -bios -d backup.fd</span><br></pre></td></tr></table></figure>
+<p>保存后修改文件扩展名为<code>.cmd</code>，右键以管理员身份运行，提取主板BIOS，提取后的文件存储在同目录下，名字为<code>backup.fd</code>。</p>
+<h4 id="提取bios信息">提取BIOS信息</h4>
+<p>打开UEFITool，菜单栏选择<code>File &gt; Open image file...</code>，选择上一步提取出的<code>backup.fd</code>。</p>
+<p>菜单栏选择<code>Action &gt; Search...</code>，在弹出的对话框中选择<code>Text</code>，输入<code>CFG Lock</code>，搜索的结果在下方显示，双击<code>Unicode text "CFG Lock" in DriverSampleDxe/PE32 image section at header-offset 496F4h</code>定位到CFG
+Lock所在位置。</p>
+<p>在定位到的位置右击<code>PE32 image section</code>，选择<code>Extarct as is...</code>，将PE32
+image文件保存。</p>
+<p>接下来，我们需要把PE32 image转换成我们能读懂的信息。</p>
+<p>打开IFRExtractor，直接点击右侧加载按钮，打开上一步的PE32文件，再点击Extract，就会生成txt文本，并保存到相应的文件夹。</p>
+<h4 id="寻找需要的偏移量">寻找需要的偏移量</h4>
+<p>打开转换的txt文件，搜索字符串<code>CFG Lock</code>，定位到CFG
+Lock位置，如下所示，不同机器可能不同：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0x9B0B4 	Form: View/Configure CPU Lock Options, FormId: 0x1012 &#123;01 86 12 10 C3 00&#125;</span><br><span class="line">0x9B0BA 		One Of: CFG Lock, VarStoreInfo (VarOffset/VarName): 0x3C, VarStore: 0x3, QuestionId: 0x145, Size: 1, Min: 0x0, Max 0x1, Step: 0x0 &#123;05 91 66 02 67 02 45 01 03 00 3C 00 10 10 00 01 00&#125;</span><br><span class="line">0x9B0CB 			One Of Option: Disabled, Value (8 bit): 0x0 &#123;09 07 04 00 00 00 00&#125;</span><br><span class="line">0x9B0D2 			One Of Option: Enabled, Value (8 bit): 0x1 (default) &#123;09 07 03 00 30 00 01&#125;</span><br><span class="line">0x9B0D9 		End One Of &#123;29 02&#125;</span><br></pre></td></tr></table></figure>
+<p>其中
+<code>CFG Lock, VarStoreInfo (VarOffset/VarName): 0x3C, VarStore: 0x3</code>就是我们要找的。</p>
+<p><code>VarStoreInfo</code>的值是CFG
+Lock这个选项的地址，也可以说其在BIOS中的偏移量。后面的<code>VarStore</code>是BIOS默认值，此处为<code>0x3</code>。而我们想要解锁它就需要把它修改成<code>0x0</code>，即下面对应的Disabled
+Option，就是需要把<code>0x3C</code>这个偏移地址上的数值修改为<code>0x0</code>。</p>
+<p><strong>请注意，可变偏移量不仅对于每个主板是唯一的，甚至对于每个固件版本也是唯一的。所以读者应该自己寻找偏移量，切勿在不检查的情况下尝试使用本文中的偏移量。</strong></p>
+<h4 id="修改bios偏移量">修改BIOS偏移量</h4>
+<p>这里使用的工具是RU.efi。</p>
+<p>打开U盘，新建<code>EFI/BOOT/</code>目录，将RU.efi重命名为<code>BOOTX64.efi</code>放到该目录下。</p>
+<p>重启系统，选择从U盘启动，按任意键即可进入RU工具。</p>
+<ul>
+<li>进入后按 <kbd>alt</kbd>+<kbd>=</kbd> 切换进 "ACPI Variable"；</li>
+<li>用<kbd>PageUp</kbd>/<kbd>PageDown</kbd>/上下方向键找到"CPUSetup"；</li>
+<li>回车进入，然后用上下左右方向键找到对应的地址（本文中是<code>0x3C</code>，那么就是纵坐标<code>0030</code>，横坐标<code>0C</code>的位置）；</li>
+<li>回车，输入<code>0</code>就可以看到它变成了0，再按回车确认；</li>
+<li>按<kbd>Ctrl</kbd>
++<kbd>W</kbd>来保存，保存的时候屏幕上会直接显示Updated
+OK，这说明写入成功；</li>
+<li>按<kbd>Alt</kbd>+<kbd>Q</kbd>
+来退出，然后即可回到引导进入系统了，此时CFG已经解锁。</li>
+</ul>
+<h4 id="检查解锁情况">检查解锁情况</h4>
+<p>通过 ControlMsrE2
+检查，将OpenCore自带的<code>Tools/ControlMsrE2.efi</code>加入到Config.plist配置文件中
+。接下来，启动 OpenCore
+并选择ControlMsrE2.efi条目。这应该会显示以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This firmware has UNLOCKED MSR 0xE2 register!</span><br></pre></td></tr></table></figure>
+<p>说明MSR 0xE2解锁成功。</p>
+<h4 id="修改opencore配置文件">修改OpenCore配置文件</h4>
+<p>在Kernel
+Option中取消<code>AppleCpuPmCfgLock</code>和<code>AppleXcpmCfgLock</code>的勾选。</p>
+<p>恭喜您完成MSR CFG Lock解锁全过程！现在您将拥有正确的 CPU
+电源管理。</p>
+<h4 id="参考资料">参考资料</h4>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.zdynb.cn/2020/jie-suo-cfg-lock.html">解锁CFG
+Lock | 张登友的博客 (zdynb.cn)</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://bbs.pcbeta.com/viewthread-1899638-1-1.html">修复CFG锁-远景论坛-微软极客社区
+(pcbeta.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/121655468">从Clover到OC
+（重难点：Insyde BIOS 解锁CFG Lock） - 知乎 (zhihu.com)</a></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://happylzyy.github.io/2022/07/03/how-to-unlock-cfg-lock/" title="R720-15IKBN MSR 0xE2 CFG Lock 解锁" target="_blank" rel="external">http://happylzyy.github.io/2022/07/03/how-to-unlock-cfg-lock/</a>
+    </li>
+    
+<!--    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+-->
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/happylzyy" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/happylzyy" target="_blank"><span class="text-dark">happylzyy</span><small class="ml-1x">Student &amp; Engineer</small></a></h3>
+        <div>Up to something not serious</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/07/03/use-herokuapp-proxy-gitalk/" title="heroku反向代理gitalk解决403问题"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/07/03/how-to-render-latex-equation-code-with-katex/" title="Pure主题使用Katex渲染Latex公式"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Powered by <a href="https://hexo.io/zh-cn/index.html" target="_blank">Hexo</a> base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank"> pure </a>.
+        </div>
+    </div>
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '8b0afced256db8a7c026',
+    clientSecret: '4a66d812a636c078759bf9626e895489728d211a',
+    repo: 'happylzyy.github.io',
+    owner: 'happylzyy',
+    admin: ['happylzyy'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: '',
+    enableHotKey: '',
+    proxy: 'https://proxy.cors.sh/https://github.com/login/oauth/access_token'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script>
+
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
+        var $i = $("<span/>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "#ff6651"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+</body>
+</html>

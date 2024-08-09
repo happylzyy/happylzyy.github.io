@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>How to enable both secure boot and LUKS with TPM | happylzyy&#39;s Blog</title>
+  <meta name="description" content="Secure Boot and LUKS TPM Prepare Install all packages we need 1yay -S sbctl tpm2-tss tpm2-tools follow this guideline , generate Machine Own Key and enroll it into the EFI variables. Install bootloade">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to enable both secure boot and LUKS with TPM">
+<meta property="og:url" content="http://happylzyy.github.io/2024/08/09/enable-secure-boot-and-luks-tpm/index.html">
+<meta property="og:site_name" content="happylzyy&#39;s Blog">
+<meta property="og:description" content="Secure Boot and LUKS TPM Prepare Install all packages we need 1yay -S sbctl tpm2-tss tpm2-tools follow this guideline , generate Machine Own Key and enroll it into the EFI variables. Install bootloade">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-09T14:16:24.000Z">
+<meta property="article:modified_time" content="2024-08-09T14:23:50.488Z">
+<meta property="article:author" content="happylzyy">
+<meta property="article:tag" content="manjaro">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="secureboot">
+<meta property="article:tag" content="luks">
+<meta property="article:tag" content="tpm">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://happylzyy.github.io/2024/08/09/enable-secure-boot-and-luks-tpm/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="happylzyy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/happylzyy" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">happylzyy</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student &amp; Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Somewhere, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Something interesting</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/archlinux/" rel="tag">archlinux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bios/" rel="tag">bios</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitalk/" rel="tag">gitalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hackintosh/" rel="tag">hackintosh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/" rel="tag">heroku</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hmcl/" rel="tag">hmcl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javafx/" rel="tag">javafx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/katex/" rel="tag">katex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/luks/" rel="tag">luks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/manjaro/" rel="tag">manjaro</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureboot/" rel="tag">secureboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tpm/" rel="tag">tpm</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/archlinux/" style="font-size: 13px;">archlinux</a> <a href="/tags/bios/" style="font-size: 13.5px;">bios</a> <a href="/tags/gitalk/" style="font-size: 13px;">gitalk</a> <a href="/tags/hackintosh/" style="font-size: 13px;">hackintosh</a> <a href="/tags/heroku/" style="font-size: 13px;">heroku</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/hmcl/" style="font-size: 13px;">hmcl</a> <a href="/tags/javafx/" style="font-size: 13px;">javafx</a> <a href="/tags/javascript/" style="font-size: 13px;">javascript</a> <a href="/tags/katex/" style="font-size: 13px;">katex</a> <a href="/tags/linux/" style="font-size: 13.5px;">linux</a> <a href="/tags/luks/" style="font-size: 13px;">luks</a> <a href="/tags/manjaro/" style="font-size: 14px;">manjaro</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/secureboot/" style="font-size: 13.5px;">secureboot</a> <a href="/tags/tpm/" style="font-size: 13px;">tpm</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/09/enable-secure-boot-and-luks-tpm/" class="title">How to enable both secure boot and LUKS with TPM</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-09T14:16:24.000Z" itemprop="datePublished">2024-08-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/03/07/manjaro-linux-install-record/" class="title">Manjaro Linux Reinstall Record</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-03-07T13:37:48.000Z" itemprop="datePublished">2024-03-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" class="title">在Manjaro Linux上启用SecureBoot</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-01T14:59:25.000Z" itemprop="datePublished">2023-10-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/28/add-something-interesting/" class="title">给hexo网站增加一些有趣的特效</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-28T15:36:46.000Z" itemprop="datePublished">2022-07-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/12/HMCL-missing-openjfx/" class="title">ArchLinux中HMCL启动器提示缺少JavaFX的解决方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-12T06:36:18.000Z" itemprop="datePublished">2022-07-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#secure-boot-and-luks-tpm"><span class="toc-number">1.</span> <span class="toc-text">Secure Boot and LUKS TPM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#prepare"><span class="toc-number">1.1.</span> <span class="toc-text">Prepare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install-bootloader"><span class="toc-number">1.2.</span> <span class="toc-text">Install bootloader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#configure-initramfs"><span class="toc-number">1.3.</span> <span class="toc-text">Configure initramfs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mkinitcpio.conf"><span class="toc-number">1.3.1.</span> <span class="toc-text">mkinitcpio.conf</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#crypttab.initramfs"><span class="toc-number">1.3.2.</span> <span class="toc-text">crypttab.initramfs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cmdline"><span class="toc-number">1.3.3.</span> <span class="toc-text">cmdline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#linux.preset"><span class="toc-number">1.3.4.</span> <span class="toc-text">linux.preset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#build-uki"><span class="toc-number">1.3.5.</span> <span class="toc-text">build UKI</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#secure-boot"><span class="toc-number">1.4.</span> <span class="toc-text">Secure Boot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unlock-luks-via-tpm"><span class="toc-number">1.5.</span> <span class="toc-text">Unlock LUKS via TPM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#references"><span class="toc-number">1.6.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-enable-secure-boot-and-luks-tpm" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      How to enable both secure boot and LUKS with TPM
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2024/08/09/enable-secure-boot-and-luks-tpm/" class="article-date">
+	  <time datetime="2024-08-09T14:16:24.000Z" itemprop="datePublished">2024-08-09</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/linux/" rel="tag">linux</a>, <a class="article-tag-link-link" href="/tags/luks/" rel="tag">luks</a>, <a class="article-tag-link-link" href="/tags/manjaro/" rel="tag">manjaro</a>, <a class="article-tag-link-link" href="/tags/secureboot/" rel="tag">secureboot</a>, <a class="article-tag-link-link" href="/tags/tpm/" rel="tag">tpm</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2024/08/09/enable-secure-boot-and-luks-tpm/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 917(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 5(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="secure-boot-and-luks-tpm">Secure Boot and LUKS TPM</h2>
+<h3 id="prepare">Prepare</h3>
+<p>Install all packages we need</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S sbctl tpm2-tss tpm2-tools</span><br></pre></td></tr></table></figure>
+<p>follow this <a
+href="https://happylzyy.github.io/2023/10/01/how-to-enable-secureboot-on-manjaro/">guideline</a>
+, generate Machine Own Key and enroll it into the EFI variables.</p>
+<h3 id="install-bootloader">Install bootloader</h3>
+<p>this section changes bootloader from grub to systemd-boot, because
+grub has not support to LUKSv2.</p>
+<p>Change esp partition mount point from <code>/boot/efi</code> to
+<code>/efi</code> permanently. If the esp mount point remains unchanged,
+grub packages should be removed.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">umount /boot/efi</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /efi</span><br><span class="line"><span class="built_in">sudo</span> sed -i <span class="string">&#x27;s/\/boot\/efi/\/efi/g&#x27;</span> /etc/fstab</span><br><span class="line">mount -a</span><br></pre></td></tr></table></figure>
+<p>Delete old boot entry and install new bootloader</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OLD_MANJARO=<span class="string">&quot;<span class="subst">$(efibootmgr | grep <span class="string">&quot;manjaro&quot;</span> | cut -d&#x27; &#x27; -f1 | cut -c 5-8)</span>&quot;</span> <span class="comment"># Manjaro is old boot entry name</span></span><br><span class="line">efibootgmr -b <span class="string">&quot;<span class="variable">$&#123;OLD_MANJARO&#125;</span>&quot;</span> -B <span class="comment"># delete old boot entry</span></span><br><span class="line">bootctl install &amp;&amp; systemctl <span class="built_in">enable</span> systemd-boot-update.service <span class="comment"># install systemd-boot</span></span><br></pre></td></tr></table></figure>
+<p>After installation, it should be a new boot entry "Linux Boot
+Manager" appeared in the UEFI boot menu.</p>
+<p>Open <code>/boot/efi/loader/loader.conf</code> and add there
+<code>default @saved</code>. This will make systemd-boot select your
+previously booted kernel by default. Another useful change is setting
+<code>timeout</code> to 1 or 2, most likely that’s long enough period to
+see bootloader’s menu and stop countdown if needed.</p>
+<h3 id="configure-initramfs">Configure initramfs</h3>
+<h4 id="mkinitcpio.conf">mkinitcpio.conf</h4>
+<p>Replace HOOKS array in <code>/etc/mkinitcpio.conf</code> and save old
+ones commented in the end of the file just in case:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OLD_HOOKS=$(<span class="built_in">cat</span> /etc/mkinitcpio.conf | grep <span class="string">&quot;^HOOKS=(&quot;</span>)</span><br><span class="line">sed -i <span class="string">&#x27;s|&#x27;</span><span class="string">&quot;<span class="variable">$&#123;OLD_HOOKS&#125;</span>&quot;</span><span class="string">&#x27;|HOOKS=(base systemd autodetect modconf kms keyboard sd-vconsole sd-encrypt block filesystems fsck)|&#x27;</span> /etc/mkinitcpio.conf &amp;&amp; <span class="built_in">echo</span> <span class="string">&#x27;#previous_&#x27;</span><span class="variable">$OLD_HOOKS</span> |<span class="built_in">tee</span> -a /etc/mkinitcpio.conf</span><br></pre></td></tr></table></figure>
+<p>Also for better (de)compression speed/efficiency ratio consider
+setting <code>COMPRESSION="zstd"</code> in your
+<code>/etc/mkinitcpio.conf</code> if not set already. Note though that
+this works only starting from linux 5.10.</p>
+<h4 id="crypttab.initramfs">crypttab.initramfs</h4>
+<p>Do the following to add entry about LUKS partition to
+crypttab.initramfs</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UUID=$(<span class="built_in">sudo</span> blkid -s UUID -o value /dev/nvme0n1p5)</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">echo</span> luks-<span class="variable">$UUID</span> UUID=<span class="variable">$UUID</span> none tpm2-device=auto &gt; /etc/crypttab.initramfs</span><br></pre></td></tr></table></figure>
+<h4 id="cmdline">cmdline</h4>
+<p>Create <code>cmdline</code> with the current boot parameters of the
+system</p>
+<p>Optionally, <code>/etc/cmdline.d</code> can be used for more flexible
+configuration.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/cmdline &gt; /etc/kernel/cmdline</span><br></pre></td></tr></table></figure>
+<h4 id="linux.preset">linux.preset</h4>
+<p>Open preset file for the current kernel in
+<code>/etc/mkinitcpio.d</code>, such as <code>linux66.preset</code>.</p>
+<p>Make changes following line :</p>
+<ul>
+<li>uncomment <code>default_uki</code> <code>fallback_uki</code>
+<code>default_options</code></li>
+<li>comment <code>default_image</code> <code>fallback_image</code></li>
+<li>make sure the appropriate mount point of the esp in the uki
+path</li>
+</ul>
+<h4 id="build-uki">build UKI</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> mkinitcpio -P</span><br></pre></td></tr></table></figure>
+<p>After building, there should be several UKI images in
+<code>/boot/efi/EFI/Linux</code>. Optionally, we can remove old images
+unused under <code>/boot</code>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /boot/initramfs*</span><br></pre></td></tr></table></figure>
+<p>if warning about <code>consolefont</code> appears during build
+process, create vconsole.conf and build again.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;KEYMAP=us\nFONT=tcvn8x16&quot;</span> &gt; /etc/vconsole.conf</span><br></pre></td></tr></table></figure>
+<h3 id="secure-boot">Secure Boot</h3>
+<p>sbctl is a tool that generates signed and thus trusted images used to
+boot system.</p>
+<p>Create a new script <code>sbsign-all</code>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ./sbsign-all</span><br></pre></td></tr></table></figure>
+<p>Write following code in this script and save</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">efidir=<span class="string">&quot;/boot/efi&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># UKI sign</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$&#123;efidir&#125;</span>/EFI/Linux/*.efi; <span class="keyword">do</span> /usr/bin/sbctl sign -s <span class="variable">$file</span>; <span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># system-boot sign</span></span><br><span class="line">/usr/bin/sbctl sign -s -o /usr/lib/systemd/boot/efi/systemd-bootx64.efi.signed /usr/lib/systemd/boot/efi/systemd-bootx64.efi</span><br><span class="line"></span><br><span class="line"><span class="comment"># kernel sign</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /boot/vmlinuz*; <span class="keyword">do</span> /usr/bin/sbctl sign -s <span class="variable">$file</span>; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>change permission for excutation</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> a+x ./sbsign-all</span><br></pre></td></tr></table></figure>
+<p>then run the script.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ./sbsign-all</span><br></pre></td></tr></table></figure>
+<p>Benefit from mkinitcpio hook and pacman hook, the sign process will
+run automatically when system upgrade or modified.</p>
+<p>After all steps above, reboot and enter UEFI setup menu, set Secure
+Boot ON, exit saving setting, check if the system can boot normally.</p>
+<h3 id="unlock-luks-via-tpm">Unlock LUKS via TPM</h3>
+<p>The manjaro installation use LUKSv1 for the default crypt solution,
+but our plan only support LUKSv2. So we need convert LUKS before
+configuring TPM.</p>
+<p>Insert the manjaro installation U-disk into the computer, enter live
+CD environment. if it is prohibited by secure policy, disable secure
+boot mode temporarily.</p>
+<p>Open a terminal, run following command.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cryptsetup convert --type luks2 /dev/nvme0n1p5</span><br></pre></td></tr></table></figure>
+<p>reboot and enable secure boot mode again.</p>
+<p>Before sealing LUKS key into TPM, check command <code>bootctl</code>,
+following condition should be satisfied:</p>
+<ul>
+<li><p>system booted by systemd-boot bootloader</p></li>
+<li><p>system booted in secure boot mode</p></li>
+</ul>
+<p>If the conditions are satisfied, check the cryptsetup status:</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> cryptsetup luksDump /dev/nvme0n1p5</span><br></pre></td></tr></table></figure></p>
+<p>Normally it should have 1 or 2 keyslots already occupied, the first
+one is passphrase we set, the other is probably
+<code>/crypto_keyfile.bin</code>, and no tokens in place (yet). we
+suggest remove slot 1 if it’s occupied by <code>crypto_keyfile</code> at
+the moment (since it’s not safe to use crypto_keyfile in configuration
+we’re building).</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> cryptsetup luksKillSlot /dev/nvme0n1p5 1</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /crypto_keyfile.bin</span><br></pre></td></tr></table></figure>
+<p>Then seal the LUKS key into TPM with PCR 7</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemd-cryptenroll /dev/nvme0n1p5 --tpm2-device=auto --tpm2-pcrs=7</span><br></pre></td></tr></table></figure>
+<h3 id="references">References</h3>
+<ol type="1">
+<li>https://forum.manjaro.org/t/howto-using-secure-boot-and-tpm2-to-unlock-luks-partition-on-boot/101626</li>
+<li>https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#</li>
+<li>https://wiki.archlinux.org/title/Unified_kernel_image</li>
+<li>https://wiki.archlinux.org/title/Trusted_Platform_Module</li>
+<li>https://wiki.archlinux.org/title/Systemd-cryptenroll#Trusted_Platform_Module</li>
+<li>https://wiki.archlinux.org/title/Dm-crypt/System_configuration#Using_systemd-cryptsetup-generator</li>
+<li>https://wiki.archlinux.org/title/Dm-crypt/System_configuration#Examples</li>
+<li>https://wiki.archlinux.org/title/Dm-crypt/System_configuration#Trusted_Platform_Module_and_FIDO2_keys</li>
+</ol>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://happylzyy.github.io/2024/08/09/enable-secure-boot-and-luks-tpm/" title="How to enable both secure boot and LUKS with TPM" target="_blank" rel="external">http://happylzyy.github.io/2024/08/09/enable-secure-boot-and-luks-tpm/</a>
+    </li>
+    
+<!--    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+-->
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/happylzyy" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/happylzyy" target="_blank"><span class="text-dark">happylzyy</span><small class="ml-1x">Student &amp; Engineer</small></a></h3>
+        <div>Up to something not serious</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2024/03/07/manjaro-linux-install-record/" title="Manjaro Linux Reinstall Record"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Powered by <a href="https://hexo.io/zh-cn/index.html" target="_blank">Hexo</a> base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank"> pure </a>.
+        </div>
+    </div>
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '8b0afced256db8a7c026',
+    clientSecret: '4a66d812a636c078759bf9626e895489728d211a',
+    repo: 'happylzyy.github.io',
+    owner: 'happylzyy',
+    admin: ['happylzyy'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: '',
+    enableHotKey: '',
+    proxy: 'https://proxy.cors.sh/https://github.com/login/oauth/access_token'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script>
+
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
+        var $i = $("<span/>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "#ff6651"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+</body>
+</html>

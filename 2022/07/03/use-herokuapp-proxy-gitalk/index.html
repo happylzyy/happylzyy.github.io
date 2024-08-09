@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>heroku反向代理gitalk解决403问题 | happylzyy&#39;s Blog</title>
+  <meta name="description" content="Gitalk 403 问题 Gitalk评论系统在登录github时显示error: request failed with status code 403。这是因为 gitalk 在访问 github 时为了解决跨域问题而使用了一个反向代理，这个默认的反向代理近期限制了访问，所以无法使用了。 在网上找了好几个反向代理地址，但是都不好用，因此决定自己建一个反向代理服务器。教程分为两个部分，第一部分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="heroku反向代理gitalk解决403问题">
+<meta property="og:url" content="http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/index.html">
+<meta property="og:site_name" content="happylzyy&#39;s Blog">
+<meta property="og:description" content="Gitalk 403 问题 Gitalk评论系统在登录github时显示error: request failed with status code 403。这是因为 gitalk 在访问 github 时为了解决跨域问题而使用了一个反向代理，这个默认的反向代理近期限制了访问，所以无法使用了。 在网上找了好几个反向代理地址，但是都不好用，因此决定自己建一个反向代理服务器。教程分为两个部分，第一部分">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-03T13:01:09.000Z">
+<meta property="article:modified_time" content="2022-07-03T14:26:19.000Z">
+<meta property="article:author" content="happylzyy">
+<meta property="article:tag" content="heroku">
+<meta property="article:tag" content="gitalk">
+<meta property="article:tag" content="proxy">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="happylzyy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/happylzyy" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">happylzyy</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student &amp; Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Somewhere, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Something interesting</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/archlinux/" rel="tag">archlinux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bios/" rel="tag">bios</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitalk/" rel="tag">gitalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hackintosh/" rel="tag">hackintosh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/" rel="tag">heroku</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hmcl/" rel="tag">hmcl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javafx/" rel="tag">javafx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/katex/" rel="tag">katex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/luks/" rel="tag">luks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/manjaro/" rel="tag">manjaro</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureboot/" rel="tag">secureboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tpm/" rel="tag">tpm</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/archlinux/" style="font-size: 13px;">archlinux</a> <a href="/tags/bios/" style="font-size: 13.5px;">bios</a> <a href="/tags/gitalk/" style="font-size: 13px;">gitalk</a> <a href="/tags/hackintosh/" style="font-size: 13px;">hackintosh</a> <a href="/tags/heroku/" style="font-size: 13px;">heroku</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/hmcl/" style="font-size: 13px;">hmcl</a> <a href="/tags/javafx/" style="font-size: 13px;">javafx</a> <a href="/tags/javascript/" style="font-size: 13px;">javascript</a> <a href="/tags/katex/" style="font-size: 13px;">katex</a> <a href="/tags/linux/" style="font-size: 13.5px;">linux</a> <a href="/tags/luks/" style="font-size: 13px;">luks</a> <a href="/tags/manjaro/" style="font-size: 14px;">manjaro</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/secureboot/" style="font-size: 13.5px;">secureboot</a> <a href="/tags/tpm/" style="font-size: 13px;">tpm</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/09/enable-secure-boot-and-luks-tpm/" class="title">How to enable both secure boot and LUKS with TPM</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-09T14:16:24.000Z" itemprop="datePublished">2024-08-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/03/07/manjaro-linux-install-record/" class="title">Manjaro Linux Reinstall Record</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-03-07T13:37:48.000Z" itemprop="datePublished">2024-03-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" class="title">在Manjaro Linux上启用SecureBoot</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-01T14:59:25.000Z" itemprop="datePublished">2023-10-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/28/add-something-interesting/" class="title">给hexo网站增加一些有趣的特效</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-28T15:36:46.000Z" itemprop="datePublished">2022-07-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/12/HMCL-missing-openjfx/" class="title">ArchLinux中HMCL启动器提示缺少JavaFX的解决方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-12T06:36:18.000Z" itemprop="datePublished">2022-07-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#gitalk-403-%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">Gitalk 403 问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF"><span class="toc-number">2.</span> <span class="toc-text">服务器端</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B3%A8%E5%86%8Cheroku%E5%B8%90%E5%8F%B7"><span class="toc-number">2.1.</span> <span class="toc-text">注册heroku帐号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85hero-cli"><span class="toc-number">2.2.</span> <span class="toc-text">下载安装Hero CLI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85cors-anywhere"><span class="toc-number">2.3.</span> <span class="toc-text">下载安装CORS Anywhere</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2cors-anywhere"><span class="toc-number">2.4.</span> <span class="toc-text">部署CORS Anywhere</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hexo%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">Hexo配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E6%96%87%E4%BB%B6%E4%BF%AE%E6%94%B9"><span class="toc-number">3.1.</span> <span class="toc-text">主题文件修改</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="toc-number">3.2.</span> <span class="toc-text">修改主题配置</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-use-herokuapp-proxy-gitalk" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      heroku反向代理gitalk解决403问题
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/07/03/use-herokuapp-proxy-gitalk/" class="article-date">
+	  <time datetime="2022-07-03T13:01:09.000Z" itemprop="datePublished">2022-07-03</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/gitalk/" rel="tag">gitalk</a>, <a class="article-tag-link-link" href="/tags/heroku/" rel="tag">heroku</a>, <a class="article-tag-link-link" href="/tags/proxy/" rel="tag">proxy</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/07/03/use-herokuapp-proxy-gitalk/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 926(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 4(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="gitalk-403-问题">Gitalk 403 问题</h4>
+<p>Gitalk评论系统在登录github时显示<code>error: request failed with status code 403</code>。这是因为
+gitalk 在访问 github
+时为了解决跨域问题而使用了一个反向代理，这个默认的反向代理近期限制了访问，所以无法使用了。</p>
+<p>在网上找了好几个反向代理地址，但是都不好用，因此决定自己建一个反向代理服务器。教程分为两个部分，第一部分是服务器端的配置，第二部分是hexo网站的配置。</p>
+<h4 id="服务器端">服务器端</h4>
+<p>这里用到了开源项目<a
+target="_blank" rel="noopener" href="https://github.com/Rob--W/cors-anywhere">CORS
+Anywhere</a>，这个项目可以直接在heroku上运行。</p>
+<h5 id="注册heroku帐号">注册heroku帐号</h5>
+<p>首先需要到<a
+target="_blank" rel="noopener" href="https://www.heroku.com/">heroku官网</a>注册帐号，注册和验证的过程可能需要用到不可描述的工具。</p>
+<h5 id="下载安装hero-cli">下载安装Hero CLI</h5>
+<p>Hero CLI需要用到git，如果没有装git，请看这里</p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git
+installation</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup">First-time
+Git setup</a></li>
+</ul>
+<p>在Linux上安装<code>heroku-cli</code>比较简单，只需要运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://cli-assets.heroku.com/install.sh | sh</span><br></pre></td></tr></table></figure>
+<p>对于arch系Linux，还可以用AUR安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S hero-cli</span><br></pre></td></tr></table></figure>
+<h5 id="下载安装cors-anywhere">下载安装CORS Anywhere</h5>
+<p>运行git clone</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Rob--W/cors-anywhere.git</span><br></pre></td></tr></table></figure>
+<p>进入cors-anywhere目录，安装依赖包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> cors-anywhere</span><br><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<h5 id="部署cors-anywhere">部署CORS Anywhere</h5>
+<p>登录heroku-cli</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">heroku login -i</span><br></pre></td></tr></table></figure>
+<p>在CORS Anywhere目录下创建新的app</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hero create [app名称] <span class="comment">#app名称留空会使用随机名称</span></span><br></pre></td></tr></table></figure>
+<p>将CORS Anywhere推送到heroku上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push heroku master</span><br></pre></td></tr></table></figure>
+<p>这时候安装部署完成，可以看到部署完成后的heroku
+app地址，复制下来一会儿要用到。</p>
+<h4 id="hexo配置">Hexo配置</h4>
+<h5 id="主题文件修改">主题文件修改</h5>
+<p>不同的主题可能有不同的修改方式，这里修改的是<a
+target="_blank" rel="noopener" href="https://github.com/cofess/hexo-theme-pure">pure</a>主题。主要做了以下更改：</p>
+<ul>
+<li>将gitalk修改为最新版本</li>
+<li>修改<code>var gitalk</code>增加<code>proxy</code>值</li>
+</ul>
+<p>打开<code>/layout/_common/head.ejs</code>文件，找到</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样Pure主题可以用到最新的gitalk版本。</p>
+<p>打开<code>/layout/_script/_comment/gitalk.ejs</code>，修改两处</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@@ -1,6 +1,6 @@</span><br><span class="line"> &lt;% if (typeof(script) !== &#x27;undefined&#x27; &amp;&amp; script) &#123; %&gt;</span><br><span class="line">   <span class="comment">&lt;!-- &lt;link rel=&quot;stylesheet&quot; href=&quot;https://unpkg.com/gitalk/dist/gitalk.css&quot;&gt; --&gt;</span></span><br><span class="line">-  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">+  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">   <span class="keyword">var</span> gitalk = <span class="keyword">new</span> <span class="title class_">Gitalk</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">@@ -<span class="number">12</span>,<span class="number">7</span> +<span class="number">12</span>,<span class="number">8</span> @@</span></span><br><span class="line"><span class="language-javascript">     <span class="attr">id</span>: <span class="title function_">md5</span>(location.<span class="property">pathname</span>),</span></span><br><span class="line"><span class="language-javascript">     <span class="attr">distractionFreeMode</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="language-javascript">     <span class="attr">language</span>: <span class="string">&#x27;&lt;%= theme.comment.gitalk.language %&gt;&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">-    <span class="attr">enableHotKey</span>: <span class="string">&#x27;&lt;%= theme.comment.gitalk.enableHotKey %&gt;&#x27;</span></span></span><br><span class="line"><span class="language-javascript">+    <span class="attr">enableHotKey</span>: <span class="string">&#x27;&lt;%= theme.comment.gitalk.enableHotKey %&gt;&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">+    <span class="attr">proxy</span>: <span class="string">&#x27;&lt;%= theme.comment.gitalk.proxy %&gt;&#x27;</span></span></span><br><span class="line"><span class="language-javascript">   &#125;)</span></span><br><span class="line"><span class="language-javascript">   gitalk.<span class="title function_">render</span>(<span class="string">&#x27;comments&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">   </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>gitalk@1.6.2</code>改成<code>gitalk@1.7.2</code>以使用最新版本gitalk，<code>var gitalk</code>变量增加一条内容<code>proxy: '&lt;%= theme.comment.gitalk.proxy %&gt;'</code>，注意上一条内容后面加<code>,</code></p>
+<h5 id="修改主题配置">修改主题配置</h5>
+<p>在pure主题配置文件中增加proxy地址，不同的主题gitalk位置可能不同。</p>
+<p>打开<code>_config.pure.yaml</code>文件，在gitalk里增加proxy地址</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">gitalk:</span> <span class="comment"># gitalk. https://gitalk.github.io/</span></span><br><span class="line">    <span class="attr">owner:</span> <span class="comment">#必须. GitHub repository 所有者，可以是个人或者组织。</span></span><br><span class="line">    <span class="attr">admin:</span> <span class="comment">#必须. GitHub repository 的所有者和合作者 (对这个 repository 有写权限的用户)。</span></span><br><span class="line">    <span class="attr">repo:</span>  <span class="comment">#必须. GitHub repository.</span></span><br><span class="line">    <span class="attr">ClientID:</span>  <span class="comment">#必须. GitHub Application Client ID.</span></span><br><span class="line">    <span class="attr">ClientSecret:</span>  <span class="comment">#必须. GitHub Application Client Secret.</span></span><br><span class="line">    <span class="attr">proxy:</span> <span class="string">https://[heroku</span> <span class="string">app</span> <span class="string">地址]/https://github.com/login/oauth/access_token</span></span><br></pre></td></tr></table></figure>
+<p>这样Hexo就修改完了，重新生成和部署Hexo站点到Github，尝试登录Gitalk。</p>
+<h4 id="总结">总结</h4>
+<p>Gitalk 403
+问题是默认的反向代理地址失效造成的，通过使用heroku自建反向代理服务解决Gitalk
+403问题。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/" title="heroku反向代理gitalk解决403问题" target="_blank" rel="external">http://happylzyy.github.io/2022/07/03/use-herokuapp-proxy-gitalk/</a>
+    </li>
+    
+<!--    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+-->
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/happylzyy" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/happylzyy" target="_blank"><span class="text-dark">happylzyy</span><small class="ml-1x">Student &amp; Engineer</small></a></h3>
+        <div>Up to something not serious</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/07/12/HMCL-missing-openjfx/" title="ArchLinux中HMCL启动器提示缺少JavaFX的解决方法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/07/03/how-to-unlock-cfg-lock/" title="R720-15IKBN MSR 0xE2 CFG Lock 解锁"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Powered by <a href="https://hexo.io/zh-cn/index.html" target="_blank">Hexo</a> base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank"> pure </a>.
+        </div>
+    </div>
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '8b0afced256db8a7c026',
+    clientSecret: '4a66d812a636c078759bf9626e895489728d211a',
+    repo: 'happylzyy.github.io',
+    owner: 'happylzyy',
+    admin: ['happylzyy'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: '',
+    enableHotKey: '',
+    proxy: 'https://proxy.cors.sh/https://github.com/login/oauth/access_token'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script>
+
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
+        var $i = $("<span/>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "#ff6651"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+</body>
+</html>

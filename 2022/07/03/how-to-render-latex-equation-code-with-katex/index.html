@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Pure主题使用Katex渲染Latex公式 | happylzyy&#39;s Blog</title>
+  <meta name="description" content="Pure主题的数学公式功能并不完善，为了支持Katex，对Pure主题和Hexo配置做了大量修改。 Hexo配置修改  Hexo自带的渲染插件不支持数学公式，因此先卸载自带的渲染插件 npm uninstall hexo-renderer-marked --save 删除其他任何与数学公式有关的插件，如hexo-math、markdown-it-katex等等； 删除_config.yaml配置文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pure主题使用Katex渲染Latex公式">
+<meta property="og:url" content="http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/index.html">
+<meta property="og:site_name" content="happylzyy&#39;s Blog">
+<meta property="og:description" content="Pure主题的数学公式功能并不完善，为了支持Katex，对Pure主题和Hexo配置做了大量修改。 Hexo配置修改  Hexo自带的渲染插件不支持数学公式，因此先卸载自带的渲染插件 npm uninstall hexo-renderer-marked --save 删除其他任何与数学公式有关的插件，如hexo-math、markdown-it-katex等等； 删除_config.yaml配置文">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-03T05:57:00.000Z">
+<meta property="article:modified_time" content="2022-07-03T06:03:48.000Z">
+<meta property="article:author" content="happylzyy">
+<meta property="article:tag" content="katex">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="happylzyy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/happylzyy" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">happylzyy</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student &amp; Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Somewhere, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Something interesting</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/archlinux/" rel="tag">archlinux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bios/" rel="tag">bios</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitalk/" rel="tag">gitalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hackintosh/" rel="tag">hackintosh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/" rel="tag">heroku</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hmcl/" rel="tag">hmcl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javafx/" rel="tag">javafx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/katex/" rel="tag">katex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/luks/" rel="tag">luks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/manjaro/" rel="tag">manjaro</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureboot/" rel="tag">secureboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tpm/" rel="tag">tpm</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/archlinux/" style="font-size: 13px;">archlinux</a> <a href="/tags/bios/" style="font-size: 13.5px;">bios</a> <a href="/tags/gitalk/" style="font-size: 13px;">gitalk</a> <a href="/tags/hackintosh/" style="font-size: 13px;">hackintosh</a> <a href="/tags/heroku/" style="font-size: 13px;">heroku</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/hmcl/" style="font-size: 13px;">hmcl</a> <a href="/tags/javafx/" style="font-size: 13px;">javafx</a> <a href="/tags/javascript/" style="font-size: 13px;">javascript</a> <a href="/tags/katex/" style="font-size: 13px;">katex</a> <a href="/tags/linux/" style="font-size: 13.5px;">linux</a> <a href="/tags/luks/" style="font-size: 13px;">luks</a> <a href="/tags/manjaro/" style="font-size: 14px;">manjaro</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/secureboot/" style="font-size: 13.5px;">secureboot</a> <a href="/tags/tpm/" style="font-size: 13px;">tpm</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/09/enable-secure-boot-and-luks-tpm/" class="title">How to enable both secure boot and LUKS with TPM</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-09T14:16:24.000Z" itemprop="datePublished">2024-08-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/03/07/manjaro-linux-install-record/" class="title">Manjaro Linux Reinstall Record</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-03-07T13:37:48.000Z" itemprop="datePublished">2024-03-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" class="title">在Manjaro Linux上启用SecureBoot</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-01T14:59:25.000Z" itemprop="datePublished">2023-10-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/28/add-something-interesting/" class="title">给hexo网站增加一些有趣的特效</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-28T15:36:46.000Z" itemprop="datePublished">2022-07-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/12/HMCL-missing-openjfx/" class="title">ArchLinux中HMCL启动器提示缺少JavaFX的解决方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-12T06:36:18.000Z" itemprop="datePublished">2022-07-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#hexo%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9"><span class="toc-number">1.</span> <span class="toc-text">Hexo配置修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pure%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9"><span class="toc-number">2.</span> <span class="toc-text">Pure主题修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">启用数学公式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A5%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B%E5%85%AC%E5%BC%8F%E6%B8%B2%E6%9F%93%E5%90%A7"><span class="toc-number"></span> <span class="toc-text">来测试一下公式渲染吧！</span></a>
+    </nav>
+  </div>
+</aside>
+
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-how-to-render-latex-equation-code-with-katex" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Pure主题使用Katex渲染Latex公式
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/07/03/how-to-render-latex-equation-code-with-katex/" class="article-date">
+	  <time datetime="2022-07-03T05:57:00.000Z" itemprop="datePublished">2022-07-03</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/katex/" rel="tag">katex</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/07/03/how-to-render-latex-equation-code-with-katex/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 546(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 2(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>Pure主题的数学公式功能并不完善，为了支持Katex，对Pure主题和Hexo配置做了大量修改。</p>
+<h4 id="hexo配置修改">Hexo配置修改</h4>
+<ul>
+<li><p>Hexo自带的渲染插件不支持数学公式，因此先卸载自带的渲染插件</p>
+<p><code>npm uninstall hexo-renderer-marked --save</code></p></li>
+<li><p>删除其他任何与数学公式有关的插件，如<code>hexo-math</code>、<code>markdown-it-katex</code>等等；</p></li>
+<li><p>删除<code>_config.yaml</code>配置文件里与数学公式有关的部分；</p></li>
+<li><p>安装新的渲染插件</p>
+<p><code>npm install hexo-renderer-pandoc --save</code></p></li>
+<li><p>安装依赖的软件包pandoc，打开终端运行<code>yay -Syu pandoc</code>；</p></li>
+</ul>
+<h4 id="pure主题修改">Pure主题修改</h4>
+<p>打开<code>head.ejs</code>文件，该文件位于<code>themes/pure/layout/_common/</code>，找到</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (page.mathjax) &#123; %&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;//cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (page.katex) &#123; %&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css&quot;</span> <span class="attr">integrity</span>=<span class="string">&quot;sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- The loading of KaTeX is deferred to speed up page rendering --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js&quot;</span> <span class="attr">integrity</span>=<span class="string">&quot;sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- To automatically render math in text elements, include the auto-render extension: --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js&quot;</span> <span class="attr">integrity</span>=<span class="string">&quot;sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR&quot;</span> <span class="attr">crossorigin</span>=<span class="string">&quot;anonymous&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">onload</span>=<span class="string">&quot;renderMathInElement(document.body);&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>删除<code>themes/pure/layout/_script/mathjax.ejs</code>文件。</p>
+<h4 id="启用数学公式">启用数学公式</h4>
+<p>需要写公式的文章在开头加入</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">katex:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="来测试一下公式渲染吧">来测试一下公式渲染吧！</h3>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>&#123;cases&#125;</span><br><span class="line"><span class="keyword">\nabla</span><span class="keyword">\times</span><span class="keyword">\vec</span>&#123;E&#125;=-<span class="keyword">\frac</span>&#123;<span class="keyword">\partial</span><span class="keyword">\vec</span>&#123;B&#125;&#125;&#123;<span class="keyword">\partial</span> t&#125;<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\nabla</span><span class="keyword">\times</span><span class="keyword">\vec</span>&#123;H&#125;=<span class="keyword">\vec</span>&#123;J<span class="built_in">_</span>v&#125;+<span class="keyword">\frac</span>&#123;<span class="keyword">\partial</span><span class="keyword">\vec</span>&#123;D&#125;&#125;&#123;<span class="keyword">\partial</span> t&#125;<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\nabla</span><span class="keyword">\cdot</span><span class="keyword">\vec</span>&#123;D&#125;=<span class="keyword">\rho</span><span class="built_in">_</span>v<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\nabla</span><span class="keyword">\cdot</span><span class="keyword">\vec</span>&#123;B&#125;=0</span><br><span class="line"><span class="keyword">\end</span>&#123;cases&#125;<span class="keyword">\quad</span></span><br><span class="line"><span class="keyword">\begin</span>&#123;cases&#125;</span><br><span class="line"><span class="keyword">\vec</span>&#123;D&#125;=<span class="keyword">\epsilon</span><span class="keyword">\vec</span>&#123;E&#125;<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\vec</span>&#123;B&#125;=<span class="keyword">\mu</span><span class="keyword">\vec</span>&#123;H&#125;<span class="keyword">\\</span></span><br><span class="line"><span class="keyword">\vec</span>&#123;J<span class="built_in">_</span>v&#125;=<span class="keyword">\sigma</span><span class="keyword">\vec</span>&#123;E&#125;</span><br><span class="line"><span class="keyword">\end</span>&#123;cases&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+<p>渲染为 <span class="math display">\[
+\begin{cases}
+\nabla\times\vec{E}=-\frac{\partial\vec{B}}{\partial t}\\
+\nabla\times\vec{H}=\vec{J_v}+\frac{\partial\vec{D}}{\partial t}\\
+\nabla\cdot\vec{D}=\rho_v\\
+\nabla\cdot\vec{B}=0
+\end{cases}\quad
+\begin{cases}
+\vec{D}=\epsilon\vec{E}\\
+\vec{B}=\mu\vec{H}\\
+\vec{J_v}=\sigma\vec{E}
+\end{cases}
+\]</span></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/" title="Pure主题使用Katex渲染Latex公式" target="_blank" rel="external">http://happylzyy.github.io/2022/07/03/how-to-render-latex-equation-code-with-katex/</a>
+    </li>
+    
+<!--    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+-->
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/happylzyy" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/happylzyy" target="_blank"><span class="text-dark">happylzyy</span><small class="ml-1x">Student &amp; Engineer</small></a></h3>
+        <div>Up to something not serious</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/07/03/how-to-unlock-cfg-lock/" title="R720-15IKBN MSR 0xE2 CFG Lock 解锁"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/08/06/how-to-build-blog-with-hexo/" title="使用Hexo建立个人Blog站"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Powered by <a href="https://hexo.io/zh-cn/index.html" target="_blank">Hexo</a> base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank"> pure </a>.
+        </div>
+    </div>
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '8b0afced256db8a7c026',
+    clientSecret: '4a66d812a636c078759bf9626e895489728d211a',
+    repo: 'happylzyy.github.io',
+    owner: 'happylzyy',
+    admin: ['happylzyy'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: '',
+    enableHotKey: '',
+    proxy: 'https://proxy.cors.sh/https://github.com/login/oauth/access_token'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script>
+
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
+        var $i = $("<span/>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "#ff6651"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+</body>
+</html>

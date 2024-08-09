@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Manjaro Linux Reinstall Record | happylzyy&#39;s Blog</title>
+  <meta name="description" content="Manjaro Linux Setup Install  partition 1234567NAME                                          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTSnvme0n1                                       259:0    0 931.5G  0 dis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manjaro Linux Reinstall Record">
+<meta property="og:url" content="http://happylzyy.github.io/2024/03/07/manjaro-linux-install-record/index.html">
+<meta property="og:site_name" content="happylzyy&#39;s Blog">
+<meta property="og:description" content="Manjaro Linux Setup Install  partition 1234567NAME                                          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTSnvme0n1                                       259:0    0 931.5G  0 dis">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-03-07T13:37:48.000Z">
+<meta property="article:modified_time" content="2024-08-09T14:23:02.944Z">
+<meta property="article:author" content="happylzyy">
+<meta property="article:tag" content="manjaro">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://happylzyy.github.io/2024/03/07/manjaro-linux-install-record/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="happylzyy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/happylzyy" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">happylzyy</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student &amp; Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Somewhere, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Something interesting</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/archlinux/" rel="tag">archlinux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bios/" rel="tag">bios</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitalk/" rel="tag">gitalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hackintosh/" rel="tag">hackintosh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/" rel="tag">heroku</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hmcl/" rel="tag">hmcl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javafx/" rel="tag">javafx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/katex/" rel="tag">katex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/luks/" rel="tag">luks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/manjaro/" rel="tag">manjaro</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureboot/" rel="tag">secureboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tpm/" rel="tag">tpm</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/archlinux/" style="font-size: 13px;">archlinux</a> <a href="/tags/bios/" style="font-size: 13.5px;">bios</a> <a href="/tags/gitalk/" style="font-size: 13px;">gitalk</a> <a href="/tags/hackintosh/" style="font-size: 13px;">hackintosh</a> <a href="/tags/heroku/" style="font-size: 13px;">heroku</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/hmcl/" style="font-size: 13px;">hmcl</a> <a href="/tags/javafx/" style="font-size: 13px;">javafx</a> <a href="/tags/javascript/" style="font-size: 13px;">javascript</a> <a href="/tags/katex/" style="font-size: 13px;">katex</a> <a href="/tags/linux/" style="font-size: 13.5px;">linux</a> <a href="/tags/luks/" style="font-size: 13px;">luks</a> <a href="/tags/manjaro/" style="font-size: 14px;">manjaro</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/secureboot/" style="font-size: 13.5px;">secureboot</a> <a href="/tags/tpm/" style="font-size: 13px;">tpm</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/09/enable-secure-boot-and-luks-tpm/" class="title">How to enable both secure boot and LUKS with TPM</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-09T14:16:24.000Z" itemprop="datePublished">2024-08-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/03/07/manjaro-linux-install-record/" class="title">Manjaro Linux Reinstall Record</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-03-07T13:37:48.000Z" itemprop="datePublished">2024-03-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" class="title">在Manjaro Linux上启用SecureBoot</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-01T14:59:25.000Z" itemprop="datePublished">2023-10-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/28/add-something-interesting/" class="title">给hexo网站增加一些有趣的特效</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-28T15:36:46.000Z" itemprop="datePublished">2022-07-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/12/HMCL-missing-openjfx/" class="title">ArchLinux中HMCL启动器提示缺少JavaFX的解决方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-12T06:36:18.000Z" itemprop="datePublished">2022-07-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#manjaro-linux-setup"><span class="toc-number">1.</span> <span class="toc-text">Manjaro Linux Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#install"><span class="toc-number">1.1.</span> <span class="toc-text">Install</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#system-modification"><span class="toc-number">1.2.</span> <span class="toc-text">System modification</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#repository"><span class="toc-number">1.2.1.</span> <span class="toc-text">Repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shell"><span class="toc-number">1.2.2.</span> <span class="toc-text">Shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gpu-switch"><span class="toc-number">1.2.3.</span> <span class="toc-text">GPU Switch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fonts"><span class="toc-number">1.2.4.</span> <span class="toc-text">Fonts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#command"><span class="toc-number">1.2.5.</span> <span class="toc-text">Command</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#appearance"><span class="toc-number">1.2.6.</span> <span class="toc-text">Appearance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#swapfile"><span class="toc-number">1.2.7.</span> <span class="toc-text">swapfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#samba"><span class="toc-number">1.2.8.</span> <span class="toc-text">Samba</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#firewall"><span class="toc-number">1.2.9.</span> <span class="toc-text">Firewall</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssd-trim"><span class="toc-number">1.2.10.</span> <span class="toc-text">SSD trim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java-environment"><span class="toc-number">1.2.11.</span> <span class="toc-text">Java environment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#section"><span class="toc-number">1.2.12.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#install-and-config-application"><span class="toc-number">1.3.</span> <span class="toc-text">Install and config
+application</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git"><span class="toc-number">1.3.1.</span> <span class="toc-text">git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#internet-technology"><span class="toc-number">1.3.2.</span> <span class="toc-text">Internet Technology</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fcitx5-and-rime"><span class="toc-number">1.3.3.</span> <span class="toc-text">fcitx5 and rime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apparmor"><span class="toc-number">1.3.4.</span> <span class="toc-text">apparmor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vim"><span class="toc-number">1.3.5.</span> <span class="toc-text">vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#typora"><span class="toc-number">1.3.6.</span> <span class="toc-text">typora</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#albert"><span class="toc-number">1.3.7.</span> <span class="toc-text">albert</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wps"><span class="toc-number">1.3.8.</span> <span class="toc-text">WPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gimp"><span class="toc-number">1.3.9.</span> <span class="toc-text">GIMP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#node.js"><span class="toc-number">1.3.10.</span> <span class="toc-text">Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onedrive"><span class="toc-number">1.3.11.</span> <span class="toc-text">OneDrive</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#other-app-without-configuration"><span class="toc-number">1.3.12.</span> <span class="toc-text">Other app without
+configuration</span></a></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-manjaro-linux-install-record" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Manjaro Linux Reinstall Record
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2024/03/07/manjaro-linux-install-record/" class="article-date">
+	  <time datetime="2024-03-07T13:37:48.000Z" itemprop="datePublished">2024-03-07</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/linux/" rel="tag">linux</a>, <a class="article-tag-link-link" href="/tags/manjaro/" rel="tag">manjaro</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2024/03/07/manjaro-linux-install-record/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.6k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 9(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="manjaro-linux-setup">Manjaro Linux Setup</h1>
+<h2 id="install">Install</h2>
+<ol type="1">
+<li>partition <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NAME                                          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS</span><br><span class="line">nvme0n1                                       259:0    0 931.5G  0 disk</span><br><span class="line">├─nvme0n1p1                                   259:1    0   400M  0 part  /boot/efi</span><br><span class="line">...</span><br><span class="line">├─nvme0n1p5                                   259:5    0   258G  0 part</span><br><span class="line">│ └─luks-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx 254:0    0   258G  0 crypt /</span><br><span class="line">...</span><br></pre></td></tr></table></figure> esp partition <code>nvme0n1p1</code> mount
+on <code>\boot\efi</code>, while the root system installed on crypted
+partition <code>nvme0n1p5</code> with LUKSv1. <strong>Replace block
+names according to actual situation of your computer</strong>.</li>
+</ol>
+<h2 id="system-modification">System modification</h2>
+<p>Before start, make an upgrade for the whole system.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -Syu</span><br></pre></td></tr></table></figure>
+<h3 id="repository">Repository</h3>
+<ul>
+<li>Change server location: <strong>China</strong></li>
+<li>Add <strong>archlinuxcn</strong> Repository at the end of file.
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">echo</span> &gt;&gt; /etc/pacman.conf <span class="string">&quot;</span></span><br><span class="line"><span class="string">[archlinuxcn]</span></span><br><span class="line"><span class="string">Server = https://mirrors.ustc.edu.cn/archlinuxcn/<span class="variable">$arch</span></span></span><br><span class="line"><span class="string">&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>Enable <strong>flatpak</strong> and <strong>AUR</strong> in "Add /
+Remove Software" setting.</li>
+<li>Install <strong>yay</strong> tool for more comfortable package
+management experience. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -S yay</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="shell">Shell</h3>
+<ul>
+<li><p>Install <code>oh-my-zsh-git</code> from archlinuxcn repository
+with the latest code. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S archlinuxcn/oh-my-zsh-git</span><br></pre></td></tr></table></figure> After installing the package, copy
+<code>.zshrc</code> from system to home directory. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/oh-my-zsh/zshrc ~/.zshrc</span><br></pre></td></tr></table></figure> Add the
+following code to the end of <code>.zshrc</code> for original manjaro
+shell experience. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Use powerline</span></span><br><span class="line">USE_POWERLINE=<span class="string">&quot;true&quot;</span></span><br><span class="line"><span class="comment"># Source manjaro-zsh-configuration</span></span><br><span class="line"><span class="keyword">if</span> [[ -e /usr/share/zsh/manjaro-zsh-config ]]; <span class="keyword">then</span></span><br><span class="line"><span class="built_in">source</span> /usr/share/zsh/manjaro-zsh-config</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># Use manjaro zsh prompt</span></span><br><span class="line"><span class="keyword">if</span> [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; <span class="keyword">then</span></span><br><span class="line"><span class="built_in">source</span> /usr/share/zsh/manjaro-zsh-prompt</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure> At last, make some small modification,
+install <strong>autojump</strong> plugin. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S autojump</span><br></pre></td></tr></table></figure> modify the
+.zshrc file. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git autojump)</span><br></pre></td></tr></table></figure> then, change shell to zsh.
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure></p></li>
+<li><p>sudo without password add this line at the end of file
+<code>/etc/sudoers.d/10-installer</code></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">echo</span> %wheel ALL=(ALL:ALL) NOPASSWD: ALL &gt;&gt; /etc/sudoers.d/10-installer</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h3 id="gpu-switch">GPU Switch</h3>
+<p>Use <strong>envycontrol</strong> to switch intel, nvidia, and hybrid
+mode.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S envycontrol</span><br></pre></td></tr></table></figure>
+<p>In addition, a kde plasma5 widget can be convenient.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S plasma5-applets-optimus-gpu-switcher</span><br></pre></td></tr></table></figure>
+<h3 id="fonts">Fonts</h3>
+<p>Install several fonts both in Latin and Chinese.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S wqy-microhei-lite wqy-bitmapfont wqy-microhei wqy-zenhei ttf-roboto adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts</span><br></pre></td></tr></table></figure>
+<p>Install <code>ttf-apple-emoji</code> to replace original
+<code>noto-fonts-emoji</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S ttf-apple-emoji</span><br></pre></td></tr></table></figure>
+<p>Make system custom font configuration to enable apple color emoji and
+change preferred Chinese fonts.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/fonts/local.conf</span><br><span class="line">sudo vim /etc/fonts/local.conf</span><br></pre></td></tr></table></figure>
+<p>Paste following code into <code>local.conf</code>.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">fontconfig</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;fonts.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">fontconfig</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">alias</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">family</span>&gt;</span>sans-serif<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">prefer</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>Noto Sans<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>Apple Color Emoji<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>Noto Emoji<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>DejaVu Sans<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>Source Han Sans CN<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">prefer</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;/<span class="name">alias</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">alias</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">family</span>&gt;</span>serif<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">prefer</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>Noto Serif<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>Apple Color Emoji<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>Noto Emoji<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>DejaVu Serif<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">family</span>&gt;</span>Source Han Serif CN<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">prefer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">alias</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">alias</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">family</span>&gt;</span>monospace<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">prefer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">family</span>&gt;</span>Noto Mono<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">family</span>&gt;</span>Apple Color Emoji<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">family</span>&gt;</span>Noto Emoji<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">family</span>&gt;</span>DejaVu Sans Mono<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">family</span>&gt;</span>WenQuanYi Micro Hei Mono<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">prefer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">alias</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">fontconfig</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="command">Command</h3>
+<p>Install some very useful and common tools.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S zip net-tools base-devel nmap vulscan python-pypandoc</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S cowsay xcowsay sl asciiquarium fortune-mod cmatrix oneko toilet lolcat</span><br></pre></td></tr></table></figure>
+<h3 id="appearance">Appearance</h3>
+<p>Install <strong>latte dock</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S latte-dock</span><br></pre></td></tr></table></figure>
+<p>Change the desktop layout:</p>
+<ul>
+<li>move panel from bottom to top;</li>
+<li>add widgets into panel: Application Launcher, Global menu, Panel
+Spacer, Network speed, CatWalk, System tray, Pager, Digital clock, Peek
+at Desktop.</li>
+<li>add latte dock at bottom of desktop with widgets: Application
+Dashboard, Latte Tasks, Trashcan, Analog clock.</li>
+<li>add a weather widget right side the desktop.</li>
+</ul>
+<p>For widgets configuration, CatWalk idle threshold is 30%, weather
+location is Tianjin, China. For latte dock, Items absolute size is
+56px., zoom on hover is 10%, background size is 14%, and Opacity is
+52%.</p>
+<h3 id="swapfile">swapfile</h3>
+<p>The system has no swap partition after default installation process,
+for the full suspend and hibernation function experience, we setup swap
+manually.</p>
+<p>Create a swap file matched the physical memory and set proper
+permissions.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> fallocate -l 8G /.swapfile <span class="comment"># create a hide swapfile on root /</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 600 /.swapfile</span><br></pre></td></tr></table></figure>
+<p>Enable and open swap</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> mkswap /.swapfile</span><br><span class="line"><span class="built_in">sudo</span> swapon /.swapfile</span><br></pre></td></tr></table></figure>
+<p>Insert swap info into fstab</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">echo</span> <span class="string">&quot;/.swapfile none swap defaults 0 0&quot;</span> &gt;&gt; /etc/fstab</span><br></pre></td></tr></table></figure>
+<p>Reboot and check if the swap on</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">swapon</span><br><span class="line">NAME       TYPE SIZE USED PRIO</span><br><span class="line">/.swapfile file   8G   0B   -2</span><br></pre></td></tr></table></figure>
+<h3 id="samba">Samba</h3>
+<p>In Dolphin, the property share tab is unavailable because of samba
+service broken. Now we fix it.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">yay -S samba</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">touch</span> /etc/samba/smb.conf</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /var/lib/samba/usershares</span><br><span class="line"><span class="built_in">sudo</span> groupadd sambashares -U [username]</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> [username]:sambashares /var/lib/samba/usershares</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 1770 /var/lib/samba/usershares</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> smb.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># Optionally, for accessible via NetBIOS host name</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nmb.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># Optionally, for discoverable by most non-Windows file managers</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> avahi-daemon.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># Optionally, for discoverable by Windows, wsdd service required </span></span><br><span class="line">yay -S wsdd</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> wsdd.service</span><br></pre></td></tr></table></figure>
+<p>Add following text into smb.conf (in order to prevent bugs, add a
+blank line at the end of file.)</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[global]</span></span><br><span class="line">        usershare <span class="attr">path</span> = /var/lib/samba/usershares</span><br><span class="line">        usershare max <span class="attr">shares</span> = <span class="number">100</span></span><br><span class="line">        usershare allow <span class="attr">guests</span> = <span class="literal">yes</span></span><br><span class="line">        usershare owner <span class="attr">only</span> = <span class="literal">yes</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>then reboot.</p>
+<p><strong>Attention</strong>: it seems like there are many bugs in
+property share tab.</p>
+<h3 id="firewall">Firewall</h3>
+<p>A Firewall and Firewall GUI manager is optional for network
+using.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yay -S firewalld</span><br><span class="line">sudo systemctl enable firewalld.service</span><br><span class="line">sudo systemctl start firewalld.service</span><br></pre></td></tr></table></figure>
+<h3 id="ssd-trim">SSD trim</h3>
+<p>Trim is referred to discard unused blocks on the SSD. Trim on
+encrypted device has specific security risks, but for most users, the
+benefit of TRIM outweigh those security concerns.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> cryptsetup --allow-discards --persistent refresh luks-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span><br><span class="line"><span class="built_in">sudo</span> fstrim -a -v</span><br></pre></td></tr></table></figure>
+<h3 id="java-environment">Java environment</h3>
+<p>In order to run jar application such as minecraft, Java environment
+is required. we can install OpenJDK environment with JavaFX support.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S aur/java-openjfx <span class="comment"># jre and jdk will be installed as dependencies automatically</span></span><br></pre></td></tr></table></figure>
+<h3 id="section"></h3>
+<h2 id="install-and-config-application">Install and config
+application</h2>
+<h3 id="git">git</h3>
+<p>add lfs support</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S git-lfs</span><br></pre></td></tr></table></figure>
+<p>config username and e-mail.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;My Name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;myemail@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="internet-technology">Internet Technology</h3>
+<p>there are many useful packages in repository.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S archlinuxcn/*****-verge-rev-bin watt-toolkit-bin</span><br></pre></td></tr></table></figure>
+<h3 id="fcitx5-and-rime">fcitx5 and rime</h3>
+<p>Install <strong>fcitx5</strong> bundle including 4 packages:</p>
+<ol type="1">
+<li>fcitx5 2) fcitx5-configtool 3) fcitx5-gtk 4) fcitx5-qt</li>
+</ol>
+<p>and other extra packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S fcitx5-im fcitx5-lua kcm-fcitx5 fcitx5-rime fcitx5-chinese-addons libime manjaro-asian-input-support-fcitx5 rime-symbols</span><br></pre></td></tr></table></figure>
+<p>then reboot to apply modify.</p>
+<p>clone <strong>clover_flypinyin</strong> to local</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/happylzyy/rime-cloverpinyin.git</span><br></pre></td></tr></table></figure>
+<p>follow the <code>README.md</code> to build the package.</p>
+<p>extract package to <code>/usr/share/rime-data</code> and replace
+exsiting file.</p>
+<p>create a config file in <code>~/.local/share/fcitx5/rime</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> default.custom.yaml</span><br></pre></td></tr></table></figure>
+<p>and write</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">patch:</span></span><br><span class="line">  <span class="attr">&quot;menu/page_size&quot;:</span> <span class="number">5</span></span><br><span class="line">  <span class="attr">schema_list:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">schema:</span> <span class="string">clover_flypy</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">schema:</span> <span class="string">clover</span></span><br></pre></td></tr></table></figure>
+<p>restart the rime engine.</p>
+<h3 id="apparmor">apparmor</h3>
+<p>install apparmor utils and enable the service.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yay -S apparmor</span><br><span class="line">systemctl <span class="built_in">enable</span> apparmor.service</span><br></pre></td></tr></table></figure>
+<p>Add kernel cmdline as follows. This section is not suitable for grub
+but for UKI.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /etc/cmdline.d</span><br><span class="line"><span class="built_in">touch</span> /etc/cmdline.d/security.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable apparmor</span></span><br><span class="line">lsm=landlock,lockdown,yama,integrity,apparmor,bpf audit=1 audit_backlog_limit=256</span><br></pre></td></tr></table></figure>
+<h3 id="vim">vim</h3>
+<p>install <strong>gvim</strong> via yay tool.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S gvim</span><br></pre></td></tr></table></figure>
+<p>clone the vim config to .vim folder. <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.vim &amp;&amp; <span class="built_in">cd</span> ~/.vim</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/happylzyy/vim-init.git</span><br><span class="line"><span class="built_in">cd</span> vim-init &amp;&amp; git checkout linux</span><br></pre></td></tr></table></figure> create a new file
+<code>.vimrc' in home directory and add following code <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="built_in">source</span> ~/.vim/vim-init/init.vim &gt; .vimrc</span><br></pre></td></tr></table></figure> open vim, type</code>:PluginInstall`
+to fix missing plugins via internet.</p>
+<h3 id="typora">typora</h3>
+<p>the last free version of typora is 0.11.18(beta), we can build it by
+using AUR PKGBUILD.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S aur/typora-free</span><br></pre></td></tr></table></figure>
+<h3 id="albert">albert</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S archlinuxcn/albert</span><br></pre></td></tr></table></figure>
+<p>Open System Setting -&gt; Startup and Shutdown-&gt;Autostart, add
+albert in autorun list.</p>
+<p><strong>Attention</strong>: albert has no wayland support yet.</p>
+<h3 id="wps">WPS</h3>
+<p>Install wps and all dependencies including chinese language support,
+font packages, and several fix patch, etc.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S wps-office wps-office-all-dicts-win-languages wps-office-mui-zh-cn wps-office-mime-cn wps-office-fonts wps-office-bwrap freetype2-wps ttf-wps-fonts ttf-ms-fonts</span><br></pre></td></tr></table></figure>
+<p>install bug fix <a
+target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/libtiff5/">libtiff5</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S libtiff5</span><br></pre></td></tr></table></figure>
+<h3 id="gimp">GIMP</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S gimp</span><br></pre></td></tr></table></figure>
+<p>Make GIMP Look Like Photoshop, follow the <a
+target="_blank" rel="noopener" href="https://github.com/Diolinux/PhotoGIMP">PhotoGIMP</a> project.</p>
+<h3 id="node.js">Node.js</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S nodejs npm</span><br></pre></td></tr></table></figure>
+<p>configure local repository</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npmmirror.com/</span><br></pre></td></tr></table></figure>
+<h3 id="onedrive">OneDrive</h3>
+<p>As some files synced on onedrive, we install onedriver and create
+some links</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yay -S onedrive-abraunegg onedrivegui</span><br><span class="line"><span class="comment"># Seting onedrive at ~/OneDrive in the onedrivegui app</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">ln</span> -s ~/OneDrive/Sync/Minecraft/server ./server</span><br><span class="line"><span class="built_in">ln</span> -s ~/OneDrive/Sync/Calibre ./Calibre</span><br><span class="line"><span class="built_in">ln</span> -s ~/OneDrive/Sync/Zotero/storage ./Zotero/storage</span><br></pre></td></tr></table></figure>
+<h3 id="other-app-without-configuration">Other app without
+configuration</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S steam stellarium visual-studio-code-bin zenmap wechat-beta-bwrap lx-music-desktop-bin calibre zotero kleopatra</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://happylzyy.github.io/2024/03/07/manjaro-linux-install-record/" title="Manjaro Linux Reinstall Record" target="_blank" rel="external">http://happylzyy.github.io/2024/03/07/manjaro-linux-install-record/</a>
+    </li>
+    
+<!--    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+-->
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/happylzyy" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/happylzyy" target="_blank"><span class="text-dark">happylzyy</span><small class="ml-1x">Student &amp; Engineer</small></a></h3>
+        <div>Up to something not serious</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2024/08/09/enable-secure-boot-and-luks-tpm/" title="How to enable both secure boot and LUKS with TPM"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" title="在Manjaro Linux上启用SecureBoot"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Powered by <a href="https://hexo.io/zh-cn/index.html" target="_blank">Hexo</a> base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank"> pure </a>.
+        </div>
+    </div>
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '8b0afced256db8a7c026',
+    clientSecret: '4a66d812a636c078759bf9626e895489728d211a',
+    repo: 'happylzyy.github.io',
+    owner: 'happylzyy',
+    admin: ['happylzyy'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: '',
+    enableHotKey: '',
+    proxy: 'https://proxy.cors.sh/https://github.com/login/oauth/access_token'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script>
+
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
+        var $i = $("<span/>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "#ff6651"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>在Manjaro Linux上启用SecureBoot | happylzyy&#39;s Blog</title>
+  <meta name="description" content="什么是安全引导（SecureBoot）？ Secure Boot 是一项用于提高计算机启动安全性的技术。它的主要作用是在计算机启动过程中验证引导加载程序和操作系统内核的安全性和完整性。 Secure Boot 的工作原理是:  在 UEFI 固件中内置一个可信的公钥，用于验证引导加载程序和操作系统内核的数字签名。这些组件在发布前都要使用该公钥对应的私钥进行签名。 当计算机启动时，固件会检查引导加载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Manjaro Linux上启用SecureBoot">
+<meta property="og:url" content="http://happylzyy.github.io/2023/10/01/how-to-enable-secureboot-on-manjaro/index.html">
+<meta property="og:site_name" content="happylzyy&#39;s Blog">
+<meta property="og:description" content="什么是安全引导（SecureBoot）？ Secure Boot 是一项用于提高计算机启动安全性的技术。它的主要作用是在计算机启动过程中验证引导加载程序和操作系统内核的安全性和完整性。 Secure Boot 的工作原理是:  在 UEFI 固件中内置一个可信的公钥，用于验证引导加载程序和操作系统内核的数字签名。这些组件在发布前都要使用该公钥对应的私钥进行签名。 当计算机启动时，固件会检查引导加载">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-01T14:59:25.000Z">
+<meta property="article:modified_time" content="2024-04-06T14:24:02.008Z">
+<meta property="article:author" content="happylzyy">
+<meta property="article:tag" content="manjaro">
+<meta property="article:tag" content="secureboot">
+<meta property="article:tag" content="bios">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://happylzyy.github.io/2023/10/01/how-to-enable-secureboot-on-manjaro/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="happylzyy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/happylzyy" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">happylzyy</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Student &amp; Engineer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Somewhere, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>Something interesting</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/archlinux/" rel="tag">archlinux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bios/" rel="tag">bios</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gitalk/" rel="tag">gitalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hackintosh/" rel="tag">hackintosh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/" rel="tag">heroku</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hmcl/" rel="tag">hmcl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javafx/" rel="tag">javafx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/" rel="tag">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/katex/" rel="tag">katex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/luks/" rel="tag">luks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/manjaro/" rel="tag">manjaro</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureboot/" rel="tag">secureboot</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tpm/" rel="tag">tpm</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/archlinux/" style="font-size: 13px;">archlinux</a> <a href="/tags/bios/" style="font-size: 13.5px;">bios</a> <a href="/tags/gitalk/" style="font-size: 13px;">gitalk</a> <a href="/tags/hackintosh/" style="font-size: 13px;">hackintosh</a> <a href="/tags/heroku/" style="font-size: 13px;">heroku</a> <a href="/tags/hexo/" style="font-size: 13.5px;">hexo</a> <a href="/tags/hmcl/" style="font-size: 13px;">hmcl</a> <a href="/tags/javafx/" style="font-size: 13px;">javafx</a> <a href="/tags/javascript/" style="font-size: 13px;">javascript</a> <a href="/tags/katex/" style="font-size: 13px;">katex</a> <a href="/tags/linux/" style="font-size: 13.5px;">linux</a> <a href="/tags/luks/" style="font-size: 13px;">luks</a> <a href="/tags/manjaro/" style="font-size: 14px;">manjaro</a> <a href="/tags/proxy/" style="font-size: 13px;">proxy</a> <a href="/tags/secureboot/" style="font-size: 13.5px;">secureboot</a> <a href="/tags/tpm/" style="font-size: 13px;">tpm</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/08/09/enable-secure-boot-and-luks-tpm/" class="title">How to enable both secure boot and LUKS with TPM</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-08-09T14:16:24.000Z" itemprop="datePublished">2024-08-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2024/03/07/manjaro-linux-install-record/" class="title">Manjaro Linux Reinstall Record</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-03-07T13:37:48.000Z" itemprop="datePublished">2024-03-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" class="title">在Manjaro Linux上启用SecureBoot</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-10-01T14:59:25.000Z" itemprop="datePublished">2023-10-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/28/add-something-interesting/" class="title">给hexo网站增加一些有趣的特效</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-28T15:36:46.000Z" itemprop="datePublished">2022-07-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/07/12/HMCL-missing-openjfx/" class="title">ArchLinux中HMCL启动器提示缺少JavaFX的解决方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-07-12T06:36:18.000Z" itemprop="datePublished">2022-07-12</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%89%E5%85%A8%E5%BC%95%E5%AF%BCsecureboot"><span class="toc-number">1.</span> <span class="toc-text">什么是安全引导（SecureBoot）？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E7%94%A8secureboot%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">启用SecureBoot过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mok%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90%E5%92%8C%E5%AF%BC%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">MOK密钥生成和导入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E6%9E%84%E5%BB%BAgrub"><span class="toc-number">4.</span> <span class="toc-text">重新构建GRUB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E5%BC%95%E5%AF%BC%E7%A8%8B%E5%BA%8F%E8%BF%9B%E8%A1%8C%E7%AD%BE%E5%90%8D"><span class="toc-number">5.</span> <span class="toc-text">对引导程序进行签名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">6.</span> <span class="toc-text">测试</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-how-to-enable-secureboot-on-manjaro" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在Manjaro Linux上启用SecureBoot
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/" class="article-date">
+	  <time datetime="2023-10-01T14:59:25.000Z" itemprop="datePublished">2023-10-01</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/bios/" rel="tag">bios</a>, <a class="article-tag-link-link" href="/tags/manjaro/" rel="tag">manjaro</a>, <a class="article-tag-link-link" href="/tags/secureboot/" rel="tag">secureboot</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/10/01/how-to-enable-secureboot-on-manjaro/#comments" class="article-comment-link">Comments</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">Word Count: 1.2k(words)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">Read Count: 4(minutes)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="什么是安全引导secureboot">什么是安全引导（SecureBoot）？</h4>
+<p>Secure Boot
+是一项用于提高计算机启动安全性的技术。它的主要作用是在计算机启动过程中验证引导加载程序和操作系统内核的安全性和完整性。</p>
+<p>Secure Boot 的工作原理是:</p>
+<ol type="1">
+<li><p>在 UEFI
+固件中内置一个可信的公钥，用于验证引导加载程序和操作系统内核的数字签名。这些组件在发布前都要使用该公钥对应的私钥进行签名。</p></li>
+<li><p>当计算机启动时，固件会检查引导加载程序的签名。如果签名有效，则加载引导加载程序并执行。如果签名无效，则停止启动过程。</p></li>
+<li><p>引导加载程序再检查操作系统内核的签名。如果签名有效，则加载内核并启动操作系统。</p></li>
+<li><p>整个启动过程中，任何一个组件的签名验证失败，都会停止启动，从而防止潜在的恶意软件入侵。</p></li>
+</ol>
+<p>启用 Secure Boot 可以防止 rootkit 和 bootkit 等病毒的感染。它是 UEFI
+固件的一个重要安全功能，现代个人计算机和服务器广泛采用。但也存在可能限制操作系统选择、增加软件兼容性问题等缺点。</p>
+<h4 id="启用secureboot过程">启用SecureBoot过程</h4>
+<p>Manjaro Linux 系统启用 Secure Boot 的过程包括：</p>
+<ul>
+<li>系统引导程序需要获得 Microsoft 的签名密钥才能让操作系统内核通过
+Secure Boot
+验证,但这是不可能的，因为微软不会这么做。因此替代方案是自行生成MOK密钥（Machine
+Owner Key）并替换 UEFI 固件的默认密钥；</li>
+<li>按照GRUB的官方文档重新生成并安装GRUB，这一步坑比较多；</li>
+<li>使用MOK密钥对引导程序进行签名。</li>
+</ul>
+<h4 id="mok密钥生成和导入">MOK密钥生成和导入</h4>
+<p>在开始之前，先重启系统进入BIOS设置界面，设置SecureBoot进入Setup
+Mode（不同的机器可能操作不一样）。</p>
+<p>设置完成后重启进入系统，安装以下软件：</p>
+<ul>
+<li>sbctl：Secure Boot key
+manager，这个工具使得密钥的生成和写入变得非常简单，它还拥有引导程序签名、pacman
+hook等功能。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S sbctl</span><br></pre></td></tr></table></figure>
+<p>查看SecureBoot状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sbctl status</span><br></pre></td></tr></table></figure>
+<p>应该看到 sbctl 工具未安装并且SecureBoot已禁用。</p>
+<p>生成MOK密钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sbctl create-keys</span><br></pre></td></tr></table></figure>
+<p>这将在默认位置生成MOK密钥。</p>
+<p>将MOK密钥连带Microsoft密钥一起导入UEFI固件中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sbctl enroll-keys -m</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：如果不附带“-m”选项，将会导致Mincrosoft密钥丢失，使Windows无法启动，而且某些固件会使用
+Microsoft 密钥进行签名和验证，不验证设备可能会使它们变砖。</p>
+<p>再次检查SecureBoot状态，此时sbctl会显示已安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sbctl status</span><br></pre></td></tr></table></figure>
+<h4 id="重新构建grub">重新构建GRUB</h4>
+<p>要使GRUB能在SecureBoot模式下启动，GRUB必须集成运行过程中所需的所有模块，可以参考<a
+target="_blank" rel="noopener" href="https://git.launchpad.net/~ubuntu-core-dev/grub/+git/ubuntu/tree/debian/build-efi-images?h=debian/2.06-2ubuntu12">ubuntu的grub生成脚本</a>来选择所需要的模块。然后，将这些模块记录成环境变量使用。</p>
+<p>新建<code>\etc\grub_modules</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">touch</span> /etc/grub_modules</span><br></pre></td></tr></table></figure>
+<p>打开文件，加入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">CD_MODULES=<span class="string">&quot;</span></span><br><span class="line"><span class="string">	all_video</span></span><br><span class="line"><span class="string">	boot</span></span><br><span class="line"><span class="string">	btrfs</span></span><br><span class="line"><span class="string">	cat</span></span><br><span class="line"><span class="string">	chain</span></span><br><span class="line"><span class="string">	configfile</span></span><br><span class="line"><span class="string">	echo</span></span><br><span class="line"><span class="string">	efifwsetup</span></span><br><span class="line"><span class="string">	efinet</span></span><br><span class="line"><span class="string">	ext2</span></span><br><span class="line"><span class="string">	fat</span></span><br><span class="line"><span class="string">	font</span></span><br><span class="line"><span class="string">	gettext</span></span><br><span class="line"><span class="string">	gfxmenu</span></span><br><span class="line"><span class="string">	gfxterm</span></span><br><span class="line"><span class="string">	gfxterm_background</span></span><br><span class="line"><span class="string">	gzio</span></span><br><span class="line"><span class="string">	halt</span></span><br><span class="line"><span class="string">	help</span></span><br><span class="line"><span class="string">	hfsplus</span></span><br><span class="line"><span class="string">	iso9660</span></span><br><span class="line"><span class="string">	jpeg</span></span><br><span class="line"><span class="string">	keystatus</span></span><br><span class="line"><span class="string">	loadenv</span></span><br><span class="line"><span class="string">	loopback</span></span><br><span class="line"><span class="string">	linux</span></span><br><span class="line"><span class="string">	ls</span></span><br><span class="line"><span class="string">	lsefi</span></span><br><span class="line"><span class="string">	lsefimmap</span></span><br><span class="line"><span class="string">	lsefisystab</span></span><br><span class="line"><span class="string">	lssal</span></span><br><span class="line"><span class="string">	memdisk</span></span><br><span class="line"><span class="string">	minicmd</span></span><br><span class="line"><span class="string">	normal</span></span><br><span class="line"><span class="string">	ntfs</span></span><br><span class="line"><span class="string">	part_apple</span></span><br><span class="line"><span class="string">	part_msdos</span></span><br><span class="line"><span class="string">	part_gpt</span></span><br><span class="line"><span class="string">	password_pbkdf2</span></span><br><span class="line"><span class="string">	png</span></span><br><span class="line"><span class="string">	probe</span></span><br><span class="line"><span class="string">	reboot</span></span><br><span class="line"><span class="string">	regexp</span></span><br><span class="line"><span class="string">	search</span></span><br><span class="line"><span class="string">	search_fs_uuid</span></span><br><span class="line"><span class="string">	search_fs_file</span></span><br><span class="line"><span class="string">	search_label</span></span><br><span class="line"><span class="string">	sleep</span></span><br><span class="line"><span class="string">	smbios</span></span><br><span class="line"><span class="string">	squash4</span></span><br><span class="line"><span class="string">	test</span></span><br><span class="line"><span class="string">	true</span></span><br><span class="line"><span class="string">	video</span></span><br><span class="line"><span class="string">	xfs</span></span><br><span class="line"><span class="string">	zfs</span></span><br><span class="line"><span class="string">	zfscrypt</span></span><br><span class="line"><span class="string">	zfsinfo</span></span><br><span class="line"><span class="string">	cpuid</span></span><br><span class="line"><span class="string">	play</span></span><br><span class="line"><span class="string">	tpm</span></span><br><span class="line"><span class="string">	&quot;</span></span><br><span class="line">GRUB_MODULES=<span class="string">&quot;<span class="variable">$CD_MODULES</span></span></span><br><span class="line"><span class="string">	cryptodisk</span></span><br><span class="line"><span class="string">	gcry_arcfour</span></span><br><span class="line"><span class="string">	gcry_blowfish</span></span><br><span class="line"><span class="string">	gcry_camellia</span></span><br><span class="line"><span class="string">	gcry_cast5</span></span><br><span class="line"><span class="string">	gcry_crc</span></span><br><span class="line"><span class="string">	gcry_des</span></span><br><span class="line"><span class="string">	gcry_dsa</span></span><br><span class="line"><span class="string">	gcry_idea</span></span><br><span class="line"><span class="string">	gcry_md4</span></span><br><span class="line"><span class="string">	gcry_md5</span></span><br><span class="line"><span class="string">	gcry_rfc2268</span></span><br><span class="line"><span class="string">	gcry_rijndael</span></span><br><span class="line"><span class="string">	gcry_rmd160</span></span><br><span class="line"><span class="string">	gcry_rsa</span></span><br><span class="line"><span class="string">	gcry_seed</span></span><br><span class="line"><span class="string">	gcry_serpent</span></span><br><span class="line"><span class="string">	gcry_sha1</span></span><br><span class="line"><span class="string">	gcry_sha256</span></span><br><span class="line"><span class="string">	gcry_sha512</span></span><br><span class="line"><span class="string">	gcry_tiger</span></span><br><span class="line"><span class="string">	gcry_twofish</span></span><br><span class="line"><span class="string">	gcry_whirlpool</span></span><br><span class="line"><span class="string">	luks</span></span><br><span class="line"><span class="string">	lvm</span></span><br><span class="line"><span class="string">	mdraid09</span></span><br><span class="line"><span class="string">	mdraid1x</span></span><br><span class="line"><span class="string">	raid5rec</span></span><br><span class="line"><span class="string">	raid6rec</span></span><br><span class="line"><span class="string">	&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>或者，通过已有的grub.cfg文件寻找所需的模块：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cat</span> /boot/grub/grub.cfg | awk <span class="string">&#x27;/insmod/ &#123; print $2 &#125;&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span></span><br></pre></td></tr></table></figure>
+<p>保存文件并source：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/grub_modules</span><br></pre></td></tr></table></figure>
+<p>重新构建安装GRUB到ESP分区：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> grub-install --target=x86_64-efi --efi-directory=/boot/efi --modules=<span class="string">&quot;<span class="variable">$&#123;GRUB_MODULES&#125;</span>&quot;</span> --sbat /usr/share/grub/sbat.csv --disable-shim-lock</span><br></pre></td></tr></table></figure>
+<p>target选项指明系统架构，efi-directory指明ESP分区挂载的位置，sbat是SecureBoot过程中GRUB需要的小节，disable-shim-lock选项解决了<code>shim_lock protocol not found</code>错误。</p>
+<p>重新生成grub.cfg:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+<h4 id="对引导程序进行签名">对引导程序进行签名</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sbctl sign -s /boot/efi/EFI/Manjaro/grubx64.efi</span><br></pre></td></tr></table></figure>
+<p>重新检查efi文件签名情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sbctl verify</span><br></pre></td></tr></table></figure>
+<p>除windows相关的引导文件外，其他efi都应该进行签名，例如黑苹果引导OpenCore文件的签名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> -i</span><br><span class="line">sbctl sign -s /boot/efi/EFI/OC/OpenCore.efi <span class="comment">#假设esp挂载点为/boot/efi/</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /boot/efi/EFI/OC/Drivers/*; <span class="keyword">do</span></span><br><span class="line">sbctl sign -s <span class="variable">$file</span>;</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> /boot/efi/EFI/OC/Tools/*; <span class="keyword">do</span></span><br><span class="line">sbctl sign -s <span class="variable">$file</span>;</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h4 id="测试">测试</h4>
+<p>签名完成后，进入BIOS将SecureBoot设为启用状态。</p>
+<p>重启进入系统，检查SecureBoot状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sbctl status</span><br></pre></td></tr></table></figure>
+<p>正常应该如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Installed:      ✓ sbctl is installed</span><br><span class="line">Owner GUID:     xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span><br><span class="line">Setup Mode:     ✓ Disabled</span><br><span class="line">Secure Boot:    ✓ Enabled</span><br><span class="line">Vendor Keys:    microsoft</span><br></pre></td></tr></table></figure>
+<p>然后，测试其他系统是否能够启动成功。</p>
+<p>至此，SecureBoot启用完成。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://happylzyy.github.io/2023/10/01/how-to-enable-secureboot-on-manjaro/" title="在Manjaro Linux上启用SecureBoot" target="_blank" rel="external">http://happylzyy.github.io/2023/10/01/how-to-enable-secureboot-on-manjaro/</a>
+    </li>
+    
+<!--    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+-->
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/happylzyy" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/happylzyy" target="_blank"><span class="text-dark">happylzyy</span><small class="ml-1x">Student &amp; Engineer</small></a></h3>
+        <div>Up to something not serious</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2024/03/07/manjaro-linux-install-record/" title="Manjaro Linux Reinstall Record"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/07/28/add-something-interesting/" title="给hexo网站增加一些有趣的特效"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/happylzyy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Powered by <a href="https://hexo.io/zh-cn/index.html" target="_blank">Hexo</a> base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank"> pure </a>.
+        </div>
+    </div>
+</footer>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '8b0afced256db8a7c026',
+    clientSecret: '4a66d812a636c078759bf9626e895489728d211a',
+    repo: 'happylzyy.github.io',
+    owner: 'happylzyy',
+    admin: ['happylzyy'],
+    id: md5(location.pathname),
+    distractionFreeMode: true,
+    language: '',
+    enableHotKey: '',
+    proxy: 'https://proxy.cors.sh/https://github.com/login/oauth/access_token'
+  })
+  gitalk.render('comments')
+  </script>
+      
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/canvas-nest.js/2.0.4/canvas-nest.js"></script>
+
+<script type="text/javascript">
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
+        var $i = $("<span/>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "#ff6651"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script>
+</body>
+</html>
